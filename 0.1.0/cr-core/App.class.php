@@ -37,6 +37,10 @@
 		public function init() {
 			$this->session = new Session($this->sessionName);
 			$this->router = new Router($this->routes);
+			$this->router->bindEvent('ALL', function($args) {
+				// Bubble all router events up
+				$this->triggerEvent($args['event'], $args);
+			});
 			$this->triggerEvent("INIT");
 		}
 
@@ -62,7 +66,6 @@
 			} else {
 				$r_url = $route;
 			}
-			var_dump($r_url);
 			$this->router->parseRoute($r_url);
 		}
 

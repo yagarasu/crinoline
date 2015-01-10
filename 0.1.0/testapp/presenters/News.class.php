@@ -21,6 +21,7 @@
 		public function showSingle()
 		{
 			$id = $this->getArg("id");
+			echo "Single: ".$id;
 		}
 
 	}

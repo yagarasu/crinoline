@@ -6,7 +6,7 @@
 	 * @version 0.2.0
 	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
 	 **/
-	class Router {
+	class Router extends EventTrigger {
 
 		private $routes = array();
 
@@ -22,6 +22,11 @@
 		 */
 		public function addRoute( $route, $presenter, $action ) {
 			$this->routes[$route] = array( $presenter , $action );
+			$this->triggerEvent("ADDROUTE", array(
+				'route'			=> $route,
+				'presenter'		=> $presenter,
+				'action'		=> $action
+			));
 		}
 
 		/**
@@ -31,6 +36,9 @@
 		 */
 		public function setRoutes($routes) {
 			$this->routes = $routes;
+			$this->triggerEvent("RESETROUTES", array(
+				'routes'			=> $routes
+			));
 		}
 
 		/**
@@ -50,9 +58,32 @@
 				$pattern = $this->regexFromRoute($r);
 				$matches = null;
 				if(preg_match($pattern, $route, $matches)) {
+					
+					$this->triggerEvent("BEFOREROUTING", array(
+						'route'			=> $route,
+						'routePattern'	=> $pattern,
+						'presenter'		=> $p[0],
+						'action'		=> $p[1],
+						'args'			=> $matches
+					));
+
 					$this->enroute($p[0], $p[1], $matches);
+					
+					$this->triggerEvent("AFTERROUTING", array(
+						'route'			=> $route,
+						'routePattern'	=> $pattern,
+						'presenter'		=> $p[0],
+						'action'		=> $p[1],
+						'args'			=> $matches
+					));
+
+					return;
 				}
 			}
+			$this->triggerEvent("NOTFOUND", array(
+				'route'			=> $route,
+				'routePattern'	=> $pattern
+			));
 		}
 
 		/**
