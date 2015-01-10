@@ -62,6 +62,7 @@
 			} else {
 				$r_url = $route;
 			}
+			var_dump($r_url);
 			$this->router->parseRoute($r_url);
 		}
 

@@ -1,0 +1,18 @@
+[
+	{
+		"id": 1,
+		"title": "Article 1 - Lorem ipsum dolor sit amet",
+		"date": "2015-01-01 15:00:00",
+		"author": "Carmen Crinoline",
+		"excerpt": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni aspernatur necessitatibus quis quaerat, voluptatibus neque voluptas placeat explicabo[...]",
+		"content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore aliquam sed tenetur consequatur, dolores repudiandae. Aliquam obcaecati assumenda atque labore ad maxime est, perspiciatis hic natus dolore enim quia quod."
+	},
+	{
+		"id": 2,
+		"title": "Article 2 - Lorem ipsum dolor sit amet",
+		"date": "2015-01-01 15:00:00",
+		"author": "Carmen Crinoline",
+		"excerpt": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni aspernatur necessitatibus quis quaerat, voluptatibus neque voluptas placeat explicabo[...]",
+		"content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore aliquam sed tenetur consequatur, dolores repudiandae. Aliquam obcaecati assumenda atque labore ad maxime est, perspiciatis hic natus dolore enim quia quod."
+	},
+]
