@@ -1,5 +1,4 @@
-Crinoline Framework
-===================
+![Crinoline Framework](https://raw.githubusercontent.com/yagarasu/crinoline/master/Branding/Logo.jpg "Logo")
 
 ## Current version
 The current version is **0.1.0**, but it's still a *Work in Progress*.
