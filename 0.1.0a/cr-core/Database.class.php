@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * MySQL Database class
+	 * MySQL Database wrapper
 	 * 
 	 * @version 2.0.0
 	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
@@ -170,6 +170,24 @@
 				}
 			}
 		}
+
+		/**
+		 * Constructs a simple query to fetch a single element by id
+		 * @param  string $table      Table to query
+		 * @param  string $id         Identifier of the row
+		 * @param  string $primaryKey Name of the primary key
+		 * @param  mixed $fields     Fields to retrieve. If array provided, it will be imploded.
+		 * @return mixed             The first element from results
+		 */
+		public function getSingleById($table, $id, $primaryKey='id', $fields='*') {
+			if(!$this->isConn) { return false; } else {
+				if(is_array($fields)) {
+					$fields = implode(',', $fields);
+				}
+				$q = "SELECT ".$fields." FROM ".$table." WHERE ".$primaryKey."='".$id."';";
+				return $this->queryFirst($q);
+			}
+		}
 		
 		/**
 		 * Fetches all elements from a query to an array
@@ -308,6 +326,15 @@
 					return true;
 				}
 			}
+		}
+
+		/**
+		 * Returns the affected rows of the last Insert, Update or Delete operation
+		 * @return integer Rows affected
+		 */
+		public function getAffectedRows()
+		{
+			return $this->dblink->affected_rows;
 		}
 		
 		/**

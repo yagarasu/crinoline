@@ -3,7 +3,7 @@
 	/**
 	 * Abstract class. Event trigger object.
 	 */
-	class EventTrigger {
+	abstract class EventTrigger {
 
 		// Holds the event-callback array for the bindings
 		private $triggers = array();

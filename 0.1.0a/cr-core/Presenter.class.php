@@ -5,7 +5,7 @@
  * Abstract class for Presenters
  */
 
-class Presenter extends EventTrigger {
+abstract class Presenter extends EventTrigger {
 
 	// Array to hold parsed params
 	private $context = array();

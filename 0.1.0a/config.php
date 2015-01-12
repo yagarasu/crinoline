@@ -20,7 +20,8 @@ $cfg['dirs'] = array(
 $cfg['dirs']['secondary'] = array(
 	'testapp/',					
 	'testapp/presenters/',
-	'testapp/models/'
+	'testapp/models/',
+	'testapp/includes/'
 );
 
 ?>

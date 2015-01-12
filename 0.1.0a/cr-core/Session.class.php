@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * Session Object
+	 * Session Wrapper
 	 * @version 2.0.2
 	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
 	 */

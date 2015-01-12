@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * Singleton. App class to bootstrap and handle hooks
+	 * Singleton. App class to bootstrap
 	 */
 	class App extends EventTrigger {
 
@@ -54,6 +54,33 @@
 			} else {
 				throw new Exception("Can not get the uninstantiated Session object. Init the Singleton first.");
 			}
+		}
+
+		/**
+		 * Includes a file from the child Apps
+		 * @param  string $incName The file name (without prefix)
+		 * @return boolean          Whether include opperation was successful or not.
+		 */
+		protected function loadInclude($incName)
+		{
+			if( strpos($incName, 'http://') ) throw new Exception("For your security, loadInclude does not include files from other domains.");
+			global $cfg;
+			if( strpos($incName, '/')!==false ) {
+				if( is_readable( $cfg['dirs']['app'].$incName.'.inc.php' ) ) {
+					include($cfg['dirs']['app'].$incName.'.inc.php');
+					return true;
+				}
+			}
+			foreach ($cfg['dirs']['secondary'] as $dir)
+			{
+				if( is_readable( $dir.$incName.'.inc.php' ) ) {
+					include($dir.$incName.'.inc.php');
+					return true;
+				} else {
+					continue;
+				}
+			}
+			return false;
 		}
 
 		/**

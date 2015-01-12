@@ -5,7 +5,8 @@
 	 */
 	class Home extends Presenter {
 		public function main() {
-			echo "home!!!";
+			echo "<p>home!!!</p>";
+			echo "<p>".DB_MAIN_NAME."</p>";
 			var_dump(AppSession()->hasKey());
 		}
 		public function login() {
