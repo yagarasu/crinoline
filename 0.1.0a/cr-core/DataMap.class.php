@@ -1,14 +1,21 @@
 <?php
 
 	/**
-	 * Data Map Class
 	 * Abstract class for Data Maps
+	 *
+	 * @version 0.1.0
+	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
 	 */
 	abstract class DataMap extends EventTrigger
 	{
 
 		// Model data
 		protected $data = array();
+
+		public function __construct($values=array())
+		{
+			$this->fromArray($values);
+		}
 
 		/**
 		 * Magic method to write data

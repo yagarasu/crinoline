@@ -2,6 +2,9 @@
 
 	/**
 	 * Singleton. App class to bootstrap
+	 *
+	 * @version 0.1.0
+	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
 	 */
 	class App extends EventTrigger {
 

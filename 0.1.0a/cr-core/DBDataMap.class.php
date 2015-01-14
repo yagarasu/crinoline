@@ -1,5 +1,11 @@
 <?php
 
+	/**
+	 * Abstract class for Database binded Data Maps
+	 *
+	 * @version 0.1.0
+	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
+	 */
 	abstract class DBDataMap extends DataMap
 	{
 

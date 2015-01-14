@@ -5,7 +5,7 @@
 	 * 
 	 * @version 0.2.0
 	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
-	 **/
+	 */
 	class Router extends EventTrigger {
 
 		private $routes = array();

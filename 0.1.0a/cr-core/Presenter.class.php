@@ -1,8 +1,9 @@
 <?php
 /**
- * Presenter Class
- * 
  * Abstract class for Presenters
+ *
+ * @version 0.2.0
+ * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
  */
 
 abstract class Presenter extends EventTrigger {

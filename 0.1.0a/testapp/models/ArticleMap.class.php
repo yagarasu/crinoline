@@ -3,10 +3,11 @@
 	class ArticleMap extends DBDataMap
 	{
 
-		public function __construct()
+		public function __construct($values=array())
 		{
 			$this->primaryKey = "id";
 			$this->assignedTable = "news";
+			parent::__construct($values);
 		}
 
 		private function getDB()

@@ -2,10 +2,10 @@
 
 	/**
 	 * Session Wrapper
+	 * 
 	 * @version 2.0.2
 	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
 	 */
-	 
 	 class Session {
 	 	
 		private $sessionName = ""; // Change this. Use your app name, for example.
