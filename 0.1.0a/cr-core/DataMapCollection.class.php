@@ -19,6 +19,17 @@
 			return $this->collection;
 		}
 
+		public function fromArray($collection)
+		{
+			foreach ($collection as $arrel) {
+				$idx = $this->create($arrel);
+				$this->at($idx)->bindEvent("ALL", function($evtArgs) {
+					// Bubble all collection items events up
+					$this->triggerEvent($evtArgs['event'], $evtArgs);
+				});
+			}
+		}
+
 		/**
 		 * Appends an element to the main array
 		 * @param  DataMap descendant $element The element to append
@@ -82,13 +93,55 @@
 		 */
 		public function searchFor($filters=array())
 		{
+			echo "<h2>filtering</h2>";
 			return array_filter($this->collection, function($el) use (&$filters) {
+				echo "<hr><p>Element: ".$el->title."</p>";
 				$returnEl = true;
 				foreach ($filters as $key=>$value) {
-					$returnEl = $returnEl && (isset($el->$key)&&$el->$key===$value);
+					echo "<p>Checking filter: ".$key."-".$value."</p>";
+					$returnEl = $returnEl && $this->searchFor_compare($el, $key, $value);
 				}
 				return $returnEl;
 			});
+		}
+
+		/**
+		 * Compares Key to Value and returns the result
+		 * @param  string $key   A key descriptor
+		 * @param  string $value A value descriptor
+		 * @return boolean        Result of the descriptor operation
+		 */
+		private function searchFor_compare($el, $key, $value)
+		{
+			$comparator = substr($value, 0, 1);
+			$value = (strpos('=!~/', $comparator)!==false) ? substr($value, 1) : $value;
+			$comparator = (strpos('=!~/', $comparator)!==false) ? $comparator : '=';
+			echo "<p>Comparator: ".$comparator."</p>";
+			switch ($comparator) {
+				case '!':
+					return ($el->$key!==$value);
+					break;
+				case '~':
+					return (strpos($el->$key, $value)!==false);
+					break;
+				case '/':
+					return (preg_match($value, $el->$key));
+					break;
+				case '_':
+					return (isset($el->$key));
+					break;
+				default:
+					return ($el->$key===$value);
+					break;
+			}
+		}
+
+		/**
+		 * Deletes every element in the collection
+		 */
+		public function clear()
+		{
+			$this->collection = array();
 		}
 
 		/**

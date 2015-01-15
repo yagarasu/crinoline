@@ -3,7 +3,7 @@
 	/**
 	 * MySQL Database wrapper
 	 * 
-	 * @version 2.0.0
+	 * @version 2.1.0
 	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
 	 **/
 	 
@@ -210,6 +210,21 @@
 					return $arrElements;
 				}
 			}
+		}
+
+		/**
+		 * Constructs a simple select query and returns the results
+		 * @param  string $table  Table to retrieve the data from
+		 * @param  mixed $fields Fields to retrieve. If array providen, elements will be imploded.
+		 * @param  string $where  Where clause to limit the select. If null given, no WHERE will be added
+		 * @return array         The result of executing the query
+		 */
+		public function select($table, $fields="*", $where=null)
+		{
+			$fields = (is_array($fields)) ? implode(" AND ", $fields) : $fields;
+			$where = ($where!==null) ? " WHERE ".$where.";" : ";";
+			$q = "SELECT ".$fields." FROM ".$table.$where;
+			return $this->fetchAll($q);
 		}
 		
 		/**

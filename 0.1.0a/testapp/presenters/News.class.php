@@ -56,30 +56,10 @@
 			error_reporting(E_ALL ^ E_STRICT);
 			echo "<h1>test!</h1>";
 			$cArticles = new ArticlesCollection();
-			$cArticles->create(array(
-				"title"		=> "Articulo 1",
-				"author"	=> "Carmen Crinoline",
-				"excerpt"	=> "Lorem",
-				"content"	=> "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam ipsum animi corporis, odio minus, ducimus commodi nostrum perspiciatis, error soluta repellendus nesciunt. Cumque iure iste dolor animi, recusandae asperiores delectus?"
-			));
-			$auth = new AuthorMap(array(
-				"name"	=> "Carmen Crinoline",
-				"age"	=> 40
-			));
-			echo "<p>Author: ".$auth->name."</p>";
-			$last = $cArticles->append(new ArticleMap(array(
-				"title"		=> "Articulo 2",
-				"author"	=> "Carmen Crinoline"
-			)));
-			echo "<p>Last article author: ".$cArticles->at($last)->author."</p>";
-			echo "<hr>";
-			echo "<p>Filter: </p>";
-			$f = $cArticles->searchFor(array(
-				"title"	=> "Articulo 1"
-			));
-			foreach ($f as $ar) {
-				echo "<p>".$ar->title."</p>";
-			}
+			$cArticles->load();
+			$cArticles->each(function($i, $el) {
+				echo "<p>#".$i.": ".$el->title."</p>";
+			});
 		}
 
 	}

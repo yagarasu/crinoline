@@ -150,6 +150,7 @@
 		public function load(Database $db, $id)
 		{
 			if(!$db->getIsConn()) throw new Exception("Database object must be connected.");
+			if(!$this->isSavable()) throw new Exception("Can not load an object with no assignedTable");
 			
 			$res = $db->getSingleById(
 				$this->table, 
