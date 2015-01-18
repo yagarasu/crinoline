@@ -54,12 +54,16 @@
 		public function test()
 		{
 			error_reporting(E_ALL ^ E_STRICT);
-			echo "<h1>test!</h1>";
+			//echo "<h1>test!</h1>";
+			$mArticle = new ArticleMap();
+			$mArticle->load(1);
 			$cArticles = new ArticlesCollection();
 			$cArticles->load();
-			$cArticles->each(function($i, $el) {
-				echo "<p>#".$i.": ".$el->title."</p>";
-			});
+			$vTest = new TestView();
+			$vTest->registerModel("article", $mArticle);
+			$vTest->registerModel("articles", $cArticles);
+			$vTest->loadTemplate("templates/newtest.crml");
+			$vTest->render();
 		}
 
 	}

@@ -5,7 +5,6 @@
 	 *
 	 * @version 0.1.0
 	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
-	 * @todo  Bubble events on create/append, remove them on remove
 	 */
 	abstract class DBDataMapCollection extends DataMapCollection
 	{

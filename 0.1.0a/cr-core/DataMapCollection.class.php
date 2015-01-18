@@ -39,7 +39,12 @@
 		{
 			if(!$this->baseClassIsValid()||!is_a($element, $this->baseClass)) throw new Exception("'".get_class($element)."'' given; expecting '".$this->baseClass."'. You must supply a valid base class and the appended element must be a subclass of it.");
 			array_push($this->collection, $element);
-			return count($this->collection) - 1;
+			$lidx = count($this->collection) - 1;
+			$this->at($lidx)->bindEvent("ALL", function($evtArgs) {
+				// Bubble all collection items events up
+				$this->triggerEvent($evtArgs['event'], $evtArgs);
+			});
+			return $lidx;
 		}
 
 		/**

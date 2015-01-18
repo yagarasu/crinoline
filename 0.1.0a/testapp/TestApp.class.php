@@ -19,9 +19,9 @@
 			));
 
 			if( $this->loadInclude('includes/dbconfig') ) {
-				echo "<p>DBCONFIG Loaded</p>";
+				//echo "<p>DBCONFIG Loaded</p>";
 			} else {
-				echo "<p>DBCONFIG not loaded</p>";
+				//echo "<p>DBCONFIG not loaded</p>";
 			}
 
 			parent::init();
