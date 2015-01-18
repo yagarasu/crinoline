@@ -118,6 +118,11 @@
 			echo $this->parse();
 		}
 
+		/**
+		 * Handles the replacement of single matched patterns
+		 * @param  array $matches Array containing matched strings
+		 * @return string          String to replace the pattern with
+		 */
 		private function parseSingleTag($matches)
 		{
 			$args['cmd'] = $matches['cmd'];
@@ -134,6 +139,11 @@
 			}
 		}
 
+		/**
+		 * Retrieves the attributes of the current matched string
+		 * @param  string $attributes The string to parse in the form of attrname="value"
+		 * @return array             Assoc array containing the extracted pairs
+		 */
 		private function parseTagAttributes($attributes)
 		{
 			$pattern = '(?P<attrname>\w+)=\"(?P<attrval>[^\"]*)\"';
@@ -146,6 +156,12 @@
 			return $attrs;
 		}
 
+		/**
+		 * Private tag handler. Replaces ~{$model:$property}~ with the correct value.
+		 * @internal This could be encapsulated somewhere. Maybe a static class.
+		 * @param  array  $opts Assoc array containing 'cmd' and 'subcmd' to retrieve from the view's model array
+		 * @return string       The value of the $property inside $models[$cmd]
+		 */
 		private function handleTag_label($opts=array())
 		{
 			$opts = mergeParamsArray($opts, array(
@@ -158,6 +174,12 @@
 			return $this->getModel($opts['cmd'])->$opts['subcmd'];
 		}
 
+		/**
+		 * Private tag handler. Replaces ~{view}~ with a fresh view loading the src attribute.
+		 * @internal This could be encapsulated somewhere. Maybe a static class.
+		 * @param  array  $opts Assoc array containing 'attrs' to get the 'src'
+		 * @return string       The parsed template from src with $models context
+		 */
 		private function handleTag_view($opts=array())
 		{
 			$opts = mergeParamsArray($opts, array(
@@ -170,6 +192,12 @@
 			return $newView->parse();
 		}
 
+		/**
+		 * Private tag handler. Iterates ~{foreach}...{foreach}~ with the content of the 'collection' attribute using 'as' attribute to hold the current model. This creates internally a new View and uses it to parse the container.
+		 * @internal This could be encapsulated somewhere. Maybe a static class.
+		 * @param  array  $opts Assoc array containing 'attrs' to get the 'collection' and 'as'
+		 * @return string       The parsed template from the content with $models context + current model available on the asigned key
+		 */
 		private function handleTag_foreach($opts=array())
 		{
 			$opts = mergeParamsArray($opts, array(

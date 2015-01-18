@@ -17,7 +17,7 @@
 	<hr />
 	<h2>Blocks</h2>
 	~{foreach collection="articles" as="art"}
-		<div ="~{$art:id}~">
+		<div id="~{$art:id}~">
 			<h3>~{$art:title}~</h3>
 			<p><em>~{$art:author}~ on ~{$art:date}~</em></p>
 			<cite>~{$art:excerpt}~</cite>
