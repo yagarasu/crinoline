@@ -7,22 +7,22 @@
  *  
  **/
 
-$cfg['app_class'] = "TestApp";
+$cfg['app_class'] = "ToDoApp";
 
 // Directory configuration
 $cfg['dirs'] = array(
 	"core"		=>	'cr-core/',
-	"app"		=>	'testapp/'
+	"app"		=>	'simpleToDo/'
 );
 
 // The system will search this array to autoload classes
 // You can divide cr-core and app with this array.
 $cfg['dirs']['secondary'] = array(
-	'testapp/',					
-	'testapp/presenters/',
-	'testapp/models/',
-	'testapp/views/',
-	'testapp/includes/',
+	'simpleToDo/',					
+	'simpleToDo/presenters/',
+	'simpleToDo/models/',
+	'simpleToDo/views/',
+	'simpleToDo/includes/',
 );
 
 ?>

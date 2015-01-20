@@ -104,8 +104,8 @@
 			$pattern = ''
 				.'~\{\s*'									// ~{
 				.'(?P<cmd>\$?\w+)(?:\:(?P<subcmd>\w+))?\s*'	// [$]foo[:bar]
-				.'(?P<attrs>\w+=\".*\")*\s*'				// attrn="attrv" ...
-				.'(\}(?P<cont>.*?)\{\1)?\s*'			// [} ... {foo]
+				.'(?P<attrs>\w+=\".*?\")*\s*'				// attrn="attrv" ...
+				.'(\}(?P<cont>.*?)\{\1)?\s*'				// [} ... {foo]
 				.'\}~';										// }~
 			return preg_replace_callback('/'.$pattern.'/mis', array($this,'parseSingleTag'), $template);
 		}
@@ -146,7 +146,7 @@
 		 */
 		private function parseTagAttributes($attributes)
 		{
-			$pattern = '(?P<attrname>\w+)=\"(?P<attrval>[^\"]*)\"';
+			$pattern = '(?P<attrname>\w+)=\"(?P<attrval>.*?)\"';
 			$matches = array();
 			preg_match_all('/'.$pattern.'/i', $attributes, $matches);
 			$attrs = array();
@@ -186,7 +186,6 @@
 				'attrs'		=> array()
 			));
 			if(!isset($opts['attrs']['src'])) return "[CRVIEW] Parse error. Missing 'src' attribute.";
-			
 			$newView = new View($this->models);
 			if(!$newView->loadTemplate($opts['attrs']['src'])) return "[CRVIEW] Error. Couldn't load '".$opts['attrs']['src']."'.";
 			return $newView->parse();
