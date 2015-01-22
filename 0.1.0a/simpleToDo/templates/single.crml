@@ -1,0 +1,18 @@
+~{view src="templates/header.crml"}~
+	
+	<div class="simpleToDoApp">
+		<h1>Edit To Do</h1>
+		
+		<form action="../~{$todo:idTodo}~/update/" method="post">
+			<p class="todo">
+				<input type="checkbox" ~{if condition="$todo:checked=='1'"}checked="checked"{if}~ name="checked" value="1" />
+				<input type="text" value="~{$todo:caption}~" name="caption" />
+			</p>
+			<p>
+				<button type="submit">save</button>
+				<a href="../~{$todo:idTodo}~/destroy/">[X]</a>
+			</p>
+		</form>
+	</div>
+
+~{view src="templates/footer.crml"}~

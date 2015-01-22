@@ -9,6 +9,7 @@
 		protected $collection = array();
 		// Default Data Map class
 		protected $baseClass = null;
+		public $length = 0;
 
 		/**
 		 * Returns the collection array
@@ -19,15 +20,29 @@
 			return $this->collection;
 		}
 
+		/**
+		 * Overwrites the current collection with the providen array
+		 * @param  array $collection New collection
+		 */
 		public function fromArray($collection)
 		{
 			foreach ($collection as $arrel) {
 				$idx = $this->create($arrel);
+				$this->length = $idx+1;
 				$this->at($idx)->bindEvent("ALL", function($evtArgs) {
 					// Bubble all collection items events up
 					$this->triggerEvent($evtArgs['event'], $evtArgs);
 				});
 			}
+		}
+
+		/**
+		 * Returns the count of elements in collection
+		 * @return int Count of elements in collection
+		 */
+		public function getCount()
+		{
+			return count($this->collection);
 		}
 
 		/**
@@ -39,6 +54,7 @@
 		{
 			if(!$this->baseClassIsValid()||!is_a($element, $this->baseClass)) throw new Exception("'".get_class($element)."'' given; expecting '".$this->baseClass."'. You must supply a valid base class and the appended element must be a subclass of it.");
 			array_push($this->collection, $element);
+			$this->length++;
 			$lidx = count($this->collection) - 1;
 			$this->at($lidx)->bindEvent("ALL", function($evtArgs) {
 				// Bubble all collection items events up
@@ -56,6 +72,7 @@
 		{
 			if(!$this->baseClassIsValid()) throw new Exception("You can't create new DataMaps if you don't define a valid base class."); 
 			$baseClass = $this->baseClass;
+			$this->length++;
 			return $this->append(new $baseClass($values));
 		}
 
@@ -67,6 +84,7 @@
 		{
 			if($index<0||$index>=count($this->collection)) throw new Exception("Index out of collection bounds. Expected number between 0 and ".count($this->collection));
 			unset($this->collection[$index]);
+			$this->length--;
 		}
 
 		/**
@@ -147,6 +165,7 @@
 		public function clear()
 		{
 			$this->collection = array();
+			$this->length = 0;
 		}
 
 		/**

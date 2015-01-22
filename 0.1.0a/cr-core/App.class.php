@@ -145,6 +145,16 @@
 		}
 
 		/**
+		 * Returns the App path in config.
+		 * @return string Path to App.
+		 */
+		public function getAppPath()
+		{
+			global $cfg;
+			return $cfg['dirs']['app'];
+		}
+
+		/**
 		 * Clone handler to prevent Singleton clonation
 		 */
 		public function __clone() {

@@ -35,3 +35,28 @@
 </nav>
 
 <div class="container">
+
+	<div class="simpleToDoApp">
+		<h1>To Dos</h1>
+		~{if condition="$todos:length===0"}<p>No to do's yet.</p>{if}~
+		~{if condition="$todos:length===1"}<p>1 to do.</p>{if}~
+		~{if condition="$todos:length > 1"}<p>~{$todos:length}~ to do's.</p>{if}~
+		~{foreach collection="todos" as="todo"}
+		<p class="todo">
+			<label><input type="checkbox" ~{if condition="$todo:checked=='1'"}checked="checked"{if}~ />
+			~{$todo:caption}~ <a href="#">[X]</a></label>
+		</p>
+		{foreach}~
+		<form action="?" method="post">
+			<p>
+				<input type="text" />
+				<button type="submit">+</button>
+			</p>
+		</form>
+	</div>
+
+</div><!-- /.container -->
+
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</body>
+</html>

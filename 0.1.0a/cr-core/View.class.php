@@ -217,6 +217,35 @@
 			}
 			return $final;
 		}
+
+		/**
+		 * Private tag handler. Conditional element ~{if}...{if}~ This creates internally a new View and uses it to parse the container to support nested Ifs.
+		 * @internal This could be encapsulated somewhere. Maybe a static class.
+		 * @param  array  $opts Assoc array containing 'attrs' to get 'condition' and 'cont.
+		 * @return string       The parsed template from the content with $models context
+		 */
+		private function handleTag_if($opts=array())
+		{
+			$opts = mergeParamsArray($opts, array(
+				'attrs'		=> array(),
+				'cont'		=> ''
+			));
+			if(!isset($opts['attrs']['condition'])) return "[CRVIEW] Error. Condition not set.";
+			$cond = $opts['attrs']['condition'];
+			// Replace $M:P variables with PHP literals
+			$cond = preg_replace_callback('/\$(?P<cmd>\w+)\:(?P<subcmd>\w+)/mis', function($matches) {
+				$c = $matches['cmd'];
+				$s = $matches['subcmd'];
+				if(!$this->modelIsRegistered($c)) return null;
+				if(!isset($this->getModel($c)->$s)) return null;
+				return $this->getModel($c)->$s;
+			}, $cond);
+			if(eval("return ".$cond." ;")) {
+				$nView = new View($this->models);
+				return $nView->parse($opts['cont']);
+			}
+			return "";
+		}
 	}
 
 ?>

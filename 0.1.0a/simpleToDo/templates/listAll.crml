@@ -1,0 +1,22 @@
+~{view src="templates/header.crml"}~
+	
+	<div class="simpleToDoApp">
+		<h1>To Dos</h1>
+		~{if condition="$todos:length===0"}<p>No to do's yet.</p>{if}~
+		~{if condition="$todos:length===1"}<p>1 to do.</p>{if}~
+		~{if condition="$todos:length > 1"}<p>~{$todos:length}~ to do's.</p>{if}~
+		~{foreach collection="todos" as="todo"}
+		<p class="todo">
+			<label><input type="checkbox" ~{if condition="$todo:checked=='1'"}checked="checked"{if}~ />
+			~{$todo:caption}~ <a href="~{$todo:idTodo}~/destroy/">[X]</a> <a href="~{$todo:idTodo}~/">[Edit]</a> <a href="~{$todo:idTodo}~/toggle/">[Toggle]</a></label>
+		</p>
+		{foreach}~
+		<form action="create/" method="post">
+			<p>
+				<input type="text" name="caption" />
+				<button type="submit">+</button>
+			</p>
+		</form>
+	</div>
+
+~{view src="templates/footer.crml"}~

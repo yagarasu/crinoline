@@ -19,12 +19,16 @@ define( 'FILE_CONFIG' , 'config.php' );
 // ======== DON'T TOUCH THIS =================================================
 // ===========================================================================
 
+
 // Require the configuration file
 if( is_readable(FILE_CONFIG) ){
 	require(FILE_CONFIG);
 } else {
 	die('Configuration file not found.');
 }
+
+// Save index entrypoint path on config.
+$cfg['dirs']['root'] = str_ireplace('index.php', '', $_SERVER['PHP_SELF']);
 
 // Require the bootstrap
 if( is_readable($cfg['dirs']['core'].'cr-bootstrap.php') ){

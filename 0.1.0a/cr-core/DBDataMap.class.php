@@ -13,6 +13,8 @@
 		private $primaryKey = null;
 		// Assigned DB table name
 		private $table = null;
+		// Fields to sanitize before saving
+		private $sanitizeKeys = array();
 		// Whether the map is in sync with the DB
 		protected $sync = false;
 
@@ -29,6 +31,10 @@
 			}
 			if($varname==='primaryKey') {
 				$this->primaryKey = $value;
+				return;
+			}
+			if($varname==='sanitizeKeys') {
+				$this->sanitizeKeys = $value;
 				return;
 			}
 			parent::__set($varname, $value);
@@ -48,6 +54,9 @@
 			if($varname==='assignedTable') {
 				return $this->table;
 			}
+			if($varname==='sanitizeKeys') {
+				return $this->sanitizeKeys;
+			}
 			return parent::__get($varname);
 		}
 
@@ -59,6 +68,7 @@
 		{
 			if($varname==='primaryKey') throw new Exception("You can not unset the primaryKey property");
 			if($varname==='assignedTable') throw new Exception("You can not unset the assignedTable property");
+			if($varname==='sanitizeKeys') throw new Exception("You can not unset the assignedTable property");
 			parent::__unset($varname);
 		}
 
@@ -95,15 +105,22 @@
 		{
 			if(!$db->getIsConn()) throw new Exception("Database object must be connected.");
 			if(!$this->isSavable()) throw new Exception("Can not save an object with no assignedTable");
-			
+
 			$PK = $this->primaryKey;
+
+			// Sanitize 
+			$arrData = $this->toArray(array($PK));
+			foreach ($arrData as $key=>$value) {
+				if(in_array($key, $this->sanitizeKeys)) {
+					$arrData[$key] = $db->escape($value);
+				}
+			}
+			
 			if($this->isUpdatable()) {
 				// Update
 				$res = $db->update(
 					$this->table,
-					$this->toArray(array(
-						$PK
-					)),
+					$arrData,
 					$PK."='".$this->$PK."'"
 				);
 				if($res===true) {
@@ -121,9 +138,11 @@
 				}
 			} else {
 				// else Insert
+				// If PK is set, add to arrData
+				if(isset($this->$PK)) $arrData[$PK] = $this->$PK;
 				$res = $db->insert(
 					$this->table,
-					$this->toArray()
+					$arrData
 				);
 				if($res!==false) {
 					$this->sync = true;
