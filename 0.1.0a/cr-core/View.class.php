@@ -14,13 +14,18 @@
 		// Model holder
 		protected $models = array();
 
+		// View stack. Prevents infinite loop in remote views: A calls view B, B calls view A.
+		protected $stack = array();
+
 		/**
 		 * Constructor
 		 * @param array $models Assoc array holding the models needed in the view
+		 * @param array $stack The array stack if it's an embeded view.
 		 */
-		public function __construct($models=array())
+		public function __construct($models=array(), $stack=array())
 		{
 			$this->models = $models;
+			$this->stack = $stack;
 		}
 
 		/**
@@ -186,9 +191,17 @@
 				'attrs'		=> array()
 			));
 			if(!isset($opts['attrs']['src'])) return "[CRVIEW] Parse error. Missing 'src' attribute.";
-			$newView = new View($this->models);
-			if(!$newView->loadTemplate($opts['attrs']['src'])) return "[CRVIEW] Error. Couldn't load '".$opts['attrs']['src']."'.";
-			return $newView->parse();
+			$src = $opts['attrs']['src'];
+			if(in_array($src, $this->stack)) return '<!-- [CRVIEW] Warning. Infinite View recursion. Aborting. -->'; // Break infinite loop.
+			array_push($this->stack, $src);
+			$newView = new View($this->models, $this->stack);
+			if(!$newView->loadTemplate($src)) {
+				array_pop($this->stack);
+				return "[CRVIEW] Error. Couldn't load '".$src."'.";
+			}
+			$return = $newView->parse();
+			array_pop($this->stack);
+			return $return;
 		}
 
 		/**
@@ -209,7 +222,7 @@
 			if(!$this->modelIsRegistered($collection)) return "[CRVIEW] Parse error. Model '".$collection."' not found on the registered models of this view.";
 			$final = "";
 			if($this->modelIsRegistered($cur)) $final .= "<!-- [CRVIEW] Warning. Iterator name holder is currently used. This will override, then unregister the model named '".$cur."' -->\n";
-			$nView = new View($this->models);
+			$nView = new View($this->models, $this->stack);
 			foreach ($this->getModel($collection)->toArray() as $itm) {
 				$nView->registerModel($cur, $itm);
 				$final .= $nView->parse($opts['cont']);
@@ -241,7 +254,7 @@
 				return $this->getModel($c)->$s;
 			}, $cond);
 			if(eval("return ".$cond." ;")) {
-				$nView = new View($this->models);
+				$nView = new View($this->models, $this->stack);
 				return $nView->parse($opts['cont']);
 			}
 			return "";

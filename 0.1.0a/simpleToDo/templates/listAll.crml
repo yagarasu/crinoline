@@ -2,9 +2,7 @@
 	
 	<div class="simpleToDoApp">
 		<h1>To Dos</h1>
-		~{if condition="$todos:length===0"}<p>No to do's yet.</p>{if}~
-		~{if condition="$todos:length===1"}<p>1 to do.</p>{if}~
-		~{if condition="$todos:length > 1"}<p>~{$todos:length}~ to do's.</p>{if}~
+		~{view src="templates/recursionTestA.crml"}~
 		~{foreach collection="todos" as="todo"}
 		<p class="todo">
 			<label><input type="checkbox" ~{if condition="$todo:checked=='1'"}checked="checked"{if}~ />

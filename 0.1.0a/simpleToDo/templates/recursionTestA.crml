@@ -1,0 +1,4 @@
+Recursion @ A
+~{if condition="1===1"}
+	~{view src="templates/recursionTestB.crml"}~
+{if}~
