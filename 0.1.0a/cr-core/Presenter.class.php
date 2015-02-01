@@ -31,6 +31,6 @@ abstract class Presenter extends EventTrigger {
 	/**
 	 * Proxy main function
 	 */
-	public function main() {}
+	public function main($args) {}
 }
 ?>

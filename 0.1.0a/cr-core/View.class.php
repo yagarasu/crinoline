@@ -173,7 +173,7 @@
 				'cmd'		=> '',
 				'subcmd'	=> ''
 			));
-			if($opts['cmd']===null||!$this->modelIsRegistered($opts['cmd'])) return "[CRVIEW] Parse error. Model '".$opts['cmd']."' not found on the registered models of this view.";
+			if(!$this->modelIsRegistered($opts['cmd'])) return "[CRVIEW] Parse error. Model '".$opts['cmd']."' not found on the registered models of this view.";
 			if(!isset($this->getModel($opts['cmd'])->$opts['subcmd'])) return "[CRVIEW] Parse error. Property '".$opts['cmd']."' not found in '".$opts['cmd']."'.";
 			
 			return $this->getModel($opts['cmd'])->$opts['subcmd'];
@@ -258,6 +258,25 @@
 				return $nView->parse($opts['cont']);
 			}
 			return "";
+		}
+
+		private function handleTag_info($opts=array())
+		{
+			$opts = mergeParamsArray($opts, array(
+				'attrs'		=> array(
+					'get'	=> 'rootpath'
+				)
+			));
+			$get = $opts['attrs']['get'];
+			switch ($get) {
+				case 'rootpath':
+					return RootPath();
+					break;
+				
+				default:
+					return '';
+					break;
+			}
 		}
 	}
 

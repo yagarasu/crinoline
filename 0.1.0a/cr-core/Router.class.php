@@ -3,7 +3,7 @@
 	/**
 	 * Router class
 	 * 
-	 * @version 0.2.0
+	 * @version 0.3.0
 	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
 	 */
 	class Router extends EventTrigger {
@@ -55,6 +55,12 @@
 		 */
 		public function parseRoute( $route ) {
 			foreach ($this->routes as $r=>$p) {
+				$colPos = strpos($route, ":");
+				if($colPos===false) {
+					$method = 'GET';
+				} else {
+					$method = substr($route, 0, $colPos);
+				}
 				$pattern = $this->regexFromRoute($r);
 				$matches = null;
 				if(preg_match($pattern, $route, $matches)) {
@@ -62,16 +68,18 @@
 					$this->triggerEvent("BEFOREROUTING", array(
 						'route'			=> $route,
 						'routePattern'	=> $pattern,
+						'method'		=> $method,
 						'presenter'		=> $p[0],
 						'action'		=> $p[1],
 						'args'			=> $matches
 					));
 
-					$this->enroute($p[0], $p[1], $matches);
+					$this->enroute($p[0], $p[1], $method, $matches);
 					
 					$this->triggerEvent("AFTERROUTING", array(
 						'route'			=> $route,
 						'routePattern'	=> $pattern,
+						'method'		=> $method,
 						'presenter'		=> $p[0],
 						'action'		=> $p[1],
 						'args'			=> $matches
@@ -90,13 +98,33 @@
 		 * Takes a presenter, instantiates it and calls the action
 		 * @param  string $presenter Name of the Presenter class
 		 * @param  string $action    Method to be called from the Presenter
+		 * @param string $method HTTP Method
+		 * @param array $params Matched params from %foo% var types
 		 */
-		public function enroute( $presenter , $action, $params=null ) {
+		public function enroute( $presenter , $action, $method= 'GET', $params=null ) {
+			// Get params from the HTTP method
+			switch ($method) {
+				case 'GET':
+					$reqArgs = $_GET;
+					break;
+				case 'POST':
+					$reqArgs = $_POST;
+					break;
+				case 'PUT':
+				case 'DELETE':
+					$reqArgs = array();
+					parse_str(file_get_contents("php://input"), $reqArgs);
+					break;
+				default:
+					$reqArgs = array();
+					break;
+			}
+			// Get the presenter and call it
 			$presenter = ucfirst($presenter);
 			if( class_exists($presenter) ) {
 				$p = new $presenter($params);
 				if( method_exists($p, $action) ) {
-					$p->$action();
+					$p->$action($reqArgs);
 				} else {
 					throw new Exception("Routing error. {$presenter} can't perform '{$action}'.");
 				}
@@ -108,6 +136,7 @@
 		private function regexFromRoute($route='') {
 			$route = preg_replace('/%([\w\d]+)%/i', '(?P<$1>[\w\d]+)', $route);
 			$route = str_replace('/', '\/', $route);
+			$route = str_replace(':', '\:', $route);
 			return '/^'.$route.'$/i';
 		}
 		

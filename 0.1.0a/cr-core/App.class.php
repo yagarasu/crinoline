@@ -88,11 +88,14 @@
 
 		/**
 		 * Sends a route to the router to parse
-		 * @param  string $route Route to parse. If null given, takes $_GET['_r']
+		 * @param  string $route Route to parse. If null given, takes $_GET['_r'] with the current HTTP method
 		 */
 		protected function parseRoute($route=null) {
 			if($route === null) {
+				$method = $_SERVER['REQUEST_METHOD'];
+				$method = ($method==='GET'||$method==='POST'||$method==='PUT'||$method==='DELETE') ? $method : 'GET';
 				$r_url = (isset($_GET['_r'])&&$_GET['_r']!=='') ? $_GET['_r'] : '/';
+				$r_url = $method.':'.$r_url;
 			} else {
 				$r_url = $route;
 			}

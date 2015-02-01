@@ -4,7 +4,7 @@
 	 * Home Presenter
 	 */
 	class TodoPresenter extends Presenter {
-		public function main() {
+		public function main($reqArgs) {
 			error_reporting(E_ALL ^ E_STRICT);
 
 			// Create collection and load DB
@@ -19,7 +19,7 @@
 			// Render
 			$mView->render();
 		}
-		public function single()
+		public function single($reqArgs)
 		{
 			error_reporting(E_ALL ^ E_STRICT);
 
@@ -37,7 +37,7 @@
 			// Render
 			$mView->render();
 		}
-		public function destroy()
+		public function destroy($reqArgs)
 		{
 			error_reporting(E_ALL ^ E_STRICT);
 
@@ -53,12 +53,12 @@
 			// Relocate to root
 			relocate(rootPath());
 		}
-		public function create()
+		public function create($reqArgs)
 		{
 			error_reporting(E_ALL ^ E_STRICT);
 
 			// Get form data
-			$cap = (isset($_POST['caption'])) ? $_POST['caption'] : '';
+			$cap = (isset($reqArgs['caption'])) ? $reqArgs['caption'] : '';
 
 			// Create Map
 			$t = new ToDoMap();
@@ -69,7 +69,7 @@
 			// Relocate to root
 			relocate(rootPath());
 		}
-		public function update()
+		public function update($reqArgs)
 		{
 			error_reporting(E_ALL ^ E_STRICT);
 
@@ -77,8 +77,8 @@
 			$id = $this->getArg("id");
 
 			// Get form data
-			$cap = (isset($_POST['caption'])) ? $_POST['caption'] : '';
-			$chk = (isset($_POST['checked'])) ? $_POST['checked'] : '0';
+			$cap = (isset($reqArgs['caption'])) ? $reqArgs['caption'] : '';
+			$chk = (isset($reqArgs['checked'])) ? $reqArgs['checked'] : '0';
 
 			// Create Map
 			$t = new ToDoMap();
@@ -91,7 +91,7 @@
 			// Relocate to root
 			relocate(rootPath());
 		}
-		public function toggle()
+		public function toggle($reqArgs)
 		{
 			// Get the current ID
 			$id = $this->getArg("id");

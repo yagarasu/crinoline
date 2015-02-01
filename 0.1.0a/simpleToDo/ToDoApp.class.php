@@ -9,12 +9,12 @@
 
 			$this->setSessionName("simpleToDo");
 			$this->setRoutes(array(
-				"/" 				=> array( "TodoPresenter" , "main" ),
-				"/create/"			=> array( "TodoPresenter" , "create" ),
-				"/%id%/" 			=> array( "TodoPresenter" , "single" ),
-				"/%id%/toggle/" 	=> array( "TodoPresenter" , "toggle" ),
-				"/%id%/update/" 	=> array( "TodoPresenter" , "update" ),
-				"/%id%/destroy/" 	=> array( "TodoPresenter" , "destroy" )
+				"GET:/" 				=> array( "TodoPresenter" , "main" ),
+				"POST:/create/"			=> array( "TodoPresenter" , "create" ),
+				"GET:/%id%/" 			=> array( "TodoPresenter" , "single" ),
+				"GET:/%id%/toggle/" 	=> array( "TodoPresenter" , "toggle" ),
+				"POST:/%id%/update/" 	=> array( "TodoPresenter" , "update" ),
+				"GET:/%id%/destroy/" 	=> array( "TodoPresenter" , "destroy" )
 			));
 
 			if( !$this->loadInclude('includes/dbconfig') ) {
