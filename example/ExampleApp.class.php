@@ -6,14 +6,17 @@
     class ExampleApp extends App {
         
         public function __construct() {
+            parent::__construct();
+            
             $this->config = new AppConfigDriver();
             $this->config->fetch();
             
-            $this->router = new Router(array(
-                'GET:/'         => array( 'HomePresenter' , 'main' ),
-                'GET:foo/'      => array( 'HomePresenter' , 'foo' ),
-            ));
-            parent::__construct();
+            $this->router->addRoute( 'GET:/' , 'HomePresenter' , 'main' );
+            $this->router->addRoute( 'GET:foo/' , 'HomePresenter' , 'foo' );
+            
+            $this->router->bindEvent('NOTFOUND', function($args) {
+                die('Not found');
+            });
         }
         
     }
