@@ -1,19 +1,27 @@
 <?php
 
+    /**
+     * Crinoline Index
+     * 
+     * Loads the main configuration and calls bootstrap
+     */
+
+    // For debugging.
     error_reporting(E_ALL);
     
-    define('CRINOLINE_ROOT', '../crinoline/');
-
-    require '../crinoline/autoloader.inc.php';
-    crinoline_register_autoloader();
-    crinoline_register_app_dirs(array(
-        '../example/',
-        '../example/includes/',
-        '../example/models/',
-        '../example/presenters/',
-    ));
+    // Crinoline Configuration File
+    // If you want to harden your installation, you can change this location.
+    define('CRINOLINE_CONFIG', 'config.inc.php');
     
-    $app = new ExampleApp();
-    $app->handleRequest();
+    try {
+        
+        require CRINOLINE_CONFIG;
+        
+        require CRINOLINE_CORE . 'bootstrap.php';
+        
+    } catch(Exception $e) {
+        // Last level of try catch before fatal error.
+        die('Exception caught: ' . $e->getMessage());
+    }
 
 ?>
