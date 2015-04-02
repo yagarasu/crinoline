@@ -15,7 +15,9 @@
                 if(!is_readable($fn)) throw new Exception('Unable to load "' . $p['className'] . '" plugin. File not found or inaccesible.');
                 require_once $fn;
                 $cn = $p['className'];
-                array_push($this->plugins, new $cn());
+                $plugin = new $cn();
+                $plugin->setup($p['params']);
+                array_push($this->plugins, $plugin);
             }
         }
         

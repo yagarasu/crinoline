@@ -2,7 +2,7 @@
 
     interface IPlugin {
         
-        public function setup();
+        public function setup($params);
         public function bind(&$app);
         public function getInfo();
         

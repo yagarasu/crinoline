@@ -2,6 +2,8 @@
 
     class HelloWorld implements IPlugin {
         
+        private $hello = '';
+        
         public function getInfo() {
             return array(
                 'version' => '1.0.0',
@@ -14,19 +16,16 @@
             );
         }
         
-        public function setup() {
-            echo 'PRE STUFF';
+        public function setup($params) {
+            $this->hello = 'Hello, '.$params['hello'].'! :D';
         }
         
         public function bind(&$app) {
-            $app->bindEvent('NOTFOUND', array($this, 'onEvent'));
-            echo 'Bound <pre>';
-            var_dump($app->getEventsFor('NOTFOUND'));
-            echo '</pre>';
+            $app->bindEvent('AFTERROUTING', array($this, 'onEvent'));
         }
         
-        private function onEvent($args) {
-            echo 'Hello World! :)';
+        public function onEvent($args) {
+            echo $this->hello;
         }
         
     }

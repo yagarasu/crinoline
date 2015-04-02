@@ -31,7 +31,10 @@
     $config['plugins'] = array(
         array(
             'className' => 'HelloWorld',
-            'path' => CRINOLINE_CORE . 'plugins/HelloWorld/'
+            'path'      => CRINOLINE_CORE . 'plugins/HelloWorld/',
+            'params'    => array(
+                'hello' => 'Alexys'
+            )
         )
     );
 
