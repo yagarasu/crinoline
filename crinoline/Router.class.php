@@ -3,7 +3,7 @@
 	/**
 	 * Router class
 	 * 
-	 * @version 0.3.0
+	 * @version 0.3.1
 	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
 	 */
 	class Router extends EventTrigger {
@@ -54,6 +54,7 @@
 		 * @param  string $route URL to parse
 		 */
 		public function parseRoute( $route ) {
+			$pattern = '';
 			foreach ($this->routes as $r=>$p) {
 				$colPos = strpos($route, ":");
 				if($colPos===false) {

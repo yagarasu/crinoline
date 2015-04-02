@@ -1,6 +1,0 @@
-[02-Apr-2015 03:04:48 UTC] PHP Warning:  Missing argument 2 for ConfigDriverSqlite3::__construct(), called in /home/ubuntu/workspace/crinoline/example/MyApp.class.php on line 14 and defined in /home/ubuntu/workspace/crinoline/crinoline/ConfigDriverSqlite3.class.php on line 13
-[02-Apr-2015 03:04:48 UTC] PHP Notice:  Undefined variable: dbtable in /home/ubuntu/workspace/crinoline/crinoline/ConfigDriverSqlite3.class.php on line 15
-[02-Apr-2015 03:04:48 UTC] PHP Fatal error:  Class 'SQLite3' not found in /home/ubuntu/workspace/crinoline/crinoline/ConfigDriverSqlite3.class.php on line 41
-[02-Apr-2015 03:06:34 UTC] PHP Notice:  Undefined variable: dbtable in /home/ubuntu/workspace/crinoline/crinoline/ConfigDriverSqlite3.class.php on line 15
-[02-Apr-2015 03:06:34 UTC] PHP Fatal error:  Class 'SQLite3' not found in /home/ubuntu/workspace/crinoline/crinoline/ConfigDriverSqlite3.class.php on line 41
-[02-Apr-2015 03:06:47 UTC] PHP Fatal error:  Class 'SQLite3' not found in /home/ubuntu/workspace/crinoline/crinoline/ConfigDriverSqlite3.class.php on line 41
