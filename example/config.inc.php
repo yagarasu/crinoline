@@ -26,5 +26,13 @@
         '../example/models/',
         '../example/presenters/',
     );
+    
+    // Plugins
+    $config['plugins'] = array(
+        array(
+            'className' => 'HelloWorld',
+            'path' => CRINOLINE_CORE . 'plugins/HelloWorld/'
+        )
+    );
 
 ?>

@@ -15,9 +15,17 @@
 	// Register autoloader with custom dirs
 	crinoline_register_autoloader($config['altDirs']);
 	
+	// Load plugins
+	$pluginManager = new PluginManager($config['plugins']);
+	
 	// Start user class
 	$appName = $config['appClass'];
 	$app = new $appName();
+	
+	// Bind plugins to app
+	$pluginManager->bindTo($app);
+	
+	// Init
 	$app->init();
 
 ?>

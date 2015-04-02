@@ -67,6 +67,19 @@
 				}
 			}
 		}
+		
+		/**
+		 * Gets the event queue
+		 * @param string $event String identifier
+		 * @return array Currently bound events
+		 */
+		public function getEventsFor($event) {
+			if($event==='ALL') {
+				return $this->triggerAll;
+			} else {
+				return $this->triggers[$event];
+			}
+		}
 	}
 
 ?>

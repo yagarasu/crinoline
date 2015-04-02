@@ -8,12 +8,12 @@
         public function __construct() {
             parent::__construct();
             
-            $this->addRoute('GET:/', 'HomePresenter', 'main');
+            //$this->addRoute('GET:/', 'HomePresenter', 'main');
             
-            $this->bindEvent('ALL', function($args) {
-               echo '<p>Event: '.$args['event'].'</p>';
-            });
-            $this->bindEvent('NOTFOUND', array($this, 'handle404'));
+            // $this->bindEvent('ALL', function($args) {
+            //   echo '<p>Event: '.$args['event'].'</p>';
+            // });
+            // $this->bindEvent('NOTFOUND', array($this, 'handle404'));
         }
         
         public function init() {
