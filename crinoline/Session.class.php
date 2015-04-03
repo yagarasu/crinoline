@@ -145,6 +145,14 @@
 				return FALSE;
 			}
 		}
+
+		/**
+		 * Returns the raw array of data stored.
+		 * @return array Raw array of data
+		 */
+		public function allData() {
+			return $_SESSION[$this->sessionName]['data'];
+		}
 		
 	 }
 

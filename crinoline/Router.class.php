@@ -3,7 +3,7 @@
 	/**
 	 * Router class
 	 * 
-	 * @version 0.3.1
+	 * @version 0.3.2
 	 * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
 	 */
 	class Router extends EventTrigger {
@@ -64,7 +64,7 @@
 				}
 				$pattern = $this->regexFromRoute($r);
 				$matches = null;
-				if(preg_match($pattern, $route, $matches)) {
+				if(preg_match($pattern, $route, $matches)===1) {
 					
 					$this->triggerEvent("BEFOREROUTING", array(
 						'route'			=> $route,
@@ -135,9 +135,11 @@
 		}
 
 		private function regexFromRoute($route='') {
-			$route = preg_replace('/%([\w\d]+)%/i', '(?P<$1>[\w\d]+)', $route);
 			$route = str_replace('/', '\/', $route);
 			$route = str_replace(':', '\:', $route);
+			$route = preg_replace('/\*/', '[a-zA-Z0-9-_]+', $route);
+            $route = preg_replace('/^ALL\\\:/', '(?:GET|POST|PUT|DELETE)\\\:', $route);
+			$route = preg_replace('/%([\w\d]+)%/i', '(?P<$1>[\w\d]+)', $route);
 			return '/^'.$route.'$/i';
 		}
 		

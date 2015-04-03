@@ -16,6 +16,10 @@
     // This is the name of the class used for the main logic.
     // Must extend from App class.
     $config['appClass'] = 'MyApp';
+
+    // App root
+    // This is the absolute root of the Crinoline instalation. Use trailing slash.
+    $config['appRoot'] = 'http://localhost/crinoline/example/';
     
     // Alternative directories
     // Other than crinoline root, where else should the autoloader look for your
@@ -29,13 +33,6 @@
     
     // Plugins
     $config['plugins'] = array(
-        array(
-            'className' => 'HelloWorld',
-            'path'      => CRINOLINE_CORE . 'plugins/HelloWorld/',
-            'params'    => array(
-                'hello' => 'Alexys'
-            )
-        ),
         array(
             'className' => 'CRSession',
             'path'      => CRINOLINE_CORE . 'plugins/CRSession/',
