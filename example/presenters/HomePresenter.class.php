@@ -6,6 +6,15 @@
             echo "main";
         }
         
+        public function login($args) {
+            echo "do login!!!";
+            
+            global $plugins;
+            $plugins->plugin('CRSession')->grantKey();
+            
+            echo '<a href="../">Back</a>';
+        }
+        
     }
 
 ?>

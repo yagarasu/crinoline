@@ -17,7 +17,7 @@
                 $cn = $p['className'];
                 $plugin = new $cn();
                 $plugin->setup($p['params']);
-                array_push($this->plugins, $plugin);
+                $this->plugins[$p['className']] = $plugin;
             }
         }
         
@@ -25,6 +25,10 @@
             foreach($this->plugins as $p) {
                 $p->bind($app);
             }
+        }
+        
+        public function plugin($name) {
+            return (isset($this->plugins[$name])) ? $this->plugins[$name] : null;
         }
         
     }

@@ -1,0 +1,26 @@
+#----- Apache options -----
+	Allow from All
+	Require all granted
+	Options FollowSymLinks
+	Options -Indexes -Multiviews
+	DirectoryIndex index.php
+#---------------------------
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /crinoline/example
+
+	#----- Hide everything but index -----
+	RewriteCond %{REQUEST_FILENAME} !index.php
+	RewriteRule (.*)/.php$ index.php/$1
+	#-----------------------------------------
+
+	#----- Forward every 404 to index -----
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php?_r=/$1 [NC,L,QSA]
+	#------------------------------------------
+</IfModule>
+<IfModule !mod_rewrite.c>
+	ErrorDocument 404 /crinoline/example/index.php
+</IfModule> 

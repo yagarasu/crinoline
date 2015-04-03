@@ -1,7 +1,0 @@
-[02-Apr-2015 18:40:02 UTC] PHP Fatal error:  Interface 'Plugin' not found in /home/ubuntu/workspace/crinoline/crinoline/plugins/HelloWorld/HelloWorld.plugin.php on line 3
-[02-Apr-2015 18:40:17 UTC] PHP Fatal error:  Interfaces may not include member variables in /home/ubuntu/workspace/crinoline/crinoline/IPlugin.inc.php on line 5
-[02-Apr-2015 18:52:09 UTC] PHP Fatal error:  Call-time pass-by-reference has been removed in /home/ubuntu/workspace/crinoline/crinoline/PluginManager.class.php on line 24
-[02-Apr-2015 18:52:22 UTC] PHP Fatal error:  Class HelloWorld contains 1 abstract method and must therefore be declared abstract or implement the remaining methods (IPlugin::bind) in /home/ubuntu/workspace/crinoline/crinoline/plugins/HelloWorld/HelloWorld.plugin.php on line 30
-[02-Apr-2015 18:56:08 UTC] PHP Notice:  Undefined property: MyApp::$trigger in /home/ubuntu/workspace/crinoline/crinoline/EventTrigger.class.php on line 80
-[02-Apr-2015 20:25:49 UTC] PHP Warning:  call_user_func() expects parameter 1 to be a valid callback, cannot access private method HelloWorld::onEvent() in /home/ubuntu/workspace/crinoline/crinoline/EventTrigger.class.php on line 66
-[02-Apr-2015 20:34:03 UTC] PHP Fatal error:  Declaration of HelloWorld::setup() must be compatible with IPlugin::setup() in /home/ubuntu/workspace/crinoline/crinoline/plugins/HelloWorld/HelloWorld.plugin.php on line 3

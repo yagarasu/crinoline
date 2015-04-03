@@ -35,6 +35,13 @@
             'params'    => array(
                 'hello' => 'Alexys'
             )
+        ),
+        array(
+            'className' => 'CRSession',
+            'path'      => CRINOLINE_CORE . 'plugins/CRSession/',
+            'params'    => array(
+                'sessionName' => 'CrinolineExample'
+            )
         )
     );
 
