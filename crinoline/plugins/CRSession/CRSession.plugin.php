@@ -6,7 +6,7 @@
      * @author Alexys Hegmann "Yagarasu" <http://alexyshegmann.com>
      * @version 1.0.0
      */
-    class CRSession implements IPlugin {
+    class CRSession extends EventTrigger implements IPlugin {
         
         private $s = null;
         private $protectedRoutes = array();
@@ -87,18 +87,64 @@
             $str = str_replace(':', '\:', $str);
             $str = preg_replace('/\*/', '[a-zA-Z0-9-_]+', $str);
             $str = preg_replace('/^ALL\\\:/', '(?:GET|POST|PUT|DELETE)\\\:', $str);
+            $str .= (substr($str, -2, 2)==='\/') ? '?' : '\/?';
             return '/^' . $str . '$/';
         }
         
         // Bubble functions
-        public function grantKey() { $this->s->grantKey(); }
-        public function hasKey() { return $this->s->hasKey(); }
-        public function revokeKey() { $this->s->revokeKey(); }
-        public function setData( $key, $value ) { $this->s->setData( $key, $value ); }
-        public function getData( $key, $default=null ) { $d = $this->s->getData( $key ); return ($d!==null) ? $d : $default; }
-        public function delData( $key ) { return $this->s->delData( $key ); }
-        public function issetData( $key ) { return $this->s->issetData( $key ); }
-        public function allData() { return $this->s->allData(); }
+        public function grantKey() {
+            $this->triggerEvent('GRANTKEY', array(
+                'startedAt' => time()
+            ));
+            $this->s->grantKey();
+        }
+
+        public function hasKey() {
+            return $this->s->hasKey();
+        }
+
+        public function revokeKey() {
+            $this->triggerEvent('REVOKEKEY', array(
+                'storedData' => $this->allData(),
+                'revokedAt' => time()
+            ));
+            $this->s->revokeKey();
+        }
+
+        public function setData( $key, $value ) {
+            $this->triggerEvent('SETDATA', array(
+                'key' => $key,
+                'value' => $value
+            ));
+            $this->triggerEvent('SETDATA:'.$key, array(
+                'value' => $value
+            ));
+            $this->s->setData( $key, $value );
+        }
+
+        public function getData( $key, $default=null ) { 
+            $d = $this->s->getData( $key ); 
+            return ($d!==null) ? $d : $default; 
+        }
+
+        public function delData( $key ) {
+            $this->triggerEvent('DELDATA', array(
+                'key' => $key,
+                'value' => $this->getData($key)
+            ));
+            $this->triggerEvent('DELDATA:'.$key, array(
+                'value' => $this->getData($key)
+            )); 
+            return $this->s->delData( $key ); 
+        }
+
+        public function issetData( $key ) { 
+            return $this->s->issetData( $key ); 
+        }
+
+        public function allData() { 
+            return $this->s->allData(); 
+        }
         
     }
 

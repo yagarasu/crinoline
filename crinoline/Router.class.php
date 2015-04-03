@@ -140,6 +140,7 @@
 			$route = preg_replace('/\*/', '[a-zA-Z0-9-_]+', $route);
             $route = preg_replace('/^ALL\\\:/', '(?:GET|POST|PUT|DELETE)\\\:', $route);
 			$route = preg_replace('/%([\w\d]+)%/i', '(?P<$1>[\w\d]+)', $route);
+			$route .= (substr($route, -2, 2)==='\/') ? '?' : '\/?';
 			return '/^'.$route.'$/i';
 		}
 		
