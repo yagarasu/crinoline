@@ -88,6 +88,22 @@
 		private function getFingerprint() {
 			return hash('sha256', 'saltedfinger__'.$_SERVER['REMOTE_ADDR'].'__'.$_SERVER['HTTP_USER_AGENT'].'__'.session_id());
 		 }
+
+		 /**
+         * Returns whether the session has been started or not.
+         * This function works with any version.
+         * Based on http://php.net/manual/es/function.session-status.php#113468
+         * 
+         * @return bool The session status
+         */
+        private function sessionStarted() {
+            if( php_sapi_name()==='cli' ) return false;
+            if(version_compare(phpversion(), '5.4.0', '>=')) {
+                return session_status() === PHP_SESSION_ACTIVE ? true : false;
+            } else {
+                return session_id() === '' ? false : true;
+            }
+        }
 		
 		/**
 		 * setData

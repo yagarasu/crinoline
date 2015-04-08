@@ -39,6 +39,11 @@
             'params'    => array(
                 'sessionName' => 'CrinolineExample'
             )
+        ),
+        array(
+            'className' => 'CRRoles',
+            'path'      => CRINOLINE_CORE . 'plugins/CRRoles/',
+            'params'    => array()
         )
     );
 

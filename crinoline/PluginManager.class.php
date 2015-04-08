@@ -9,16 +9,32 @@
         
         private $plugins = array();
         
-        public function __construct($plugins) {
+        /**
+         * Require the plugins
+         * @param  array $plugins Array describing the plugins
+         */
+        public function loadPlugins($plugins) {
             foreach($plugins as $p) {
-                $fn = $p['path'] . $p['className'] . '.plugin.php';
-                if(!is_readable($fn)) throw new Exception('Unable to load "' . $p['className'] . '" plugin. File not found or inaccesible.');
-                require_once $fn;
-                $cn = $p['className'];
-                $plugin = new $cn();
-                $plugin->setup($p['params']);
-                $this->plugins[$p['className']] = $plugin;
+                $this->loadSinglePlugin($p);
             }
+        }
+
+        private function loadSinglePlugin($plugin) {
+            $fn = $plugin['path'] . $plugin['className'] . '.plugin.php';
+            if(!is_readable($fn)) throw new Exception('Unable to load "' . $plugin['className'] . '" plugin. File not found or inaccesible.');
+            require_once $fn;
+            $cn = $plugin['className'];
+            $pluginO = new $cn();
+            $pluginInfo = $pluginO->getInfo();
+            if( isset($pluginInfo['requires']) ) {
+                foreach ($pluginInfo['requires'] as $dependency) {
+                    if(!array_key_exists($dependency, $this->plugins)) {
+                        throw new Exception('Plugin "' . $plugin['className'] . '" requires plugin "' . $dependency . '" to be setted before.');
+                    }
+                }
+            }
+            $pluginO->setup($plugin['params']);
+            $this->plugins[$plugin['className']] = $pluginO;
         }
         
         public function bindTo(&$app) {

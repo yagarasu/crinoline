@@ -19,4 +19,24 @@
 		return $config['appRoot'];
 	}
 
+	function includeFile($file) {
+		if(is_readable($file)) {
+			include $file;
+		} else {
+			global $config;
+			$d = $config['altDirs'];
+			array_push($d, CRINOLINE_CORE);
+			foreach ($d as $dir) {
+				$fn = $dir . $file;
+				if(is_readable($fn)) {
+					include $fn;
+					return;
+				} else {
+					continue;
+				}
+			}
+			throw new Exception('Unable to load "' . $file . '"');
+		}
+	}
+
 ?>

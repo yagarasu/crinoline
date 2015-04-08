@@ -19,7 +19,8 @@
 	require CRINOLINE_CORE . 'functions.inc.php';
 	
 	// Load plugins
-	$plugins = new PluginManager($config['plugins']);
+	$plugins = new PluginManager();
+	$plugins->loadPlugins($config['plugins']);
 	
 	// Start user class
 	$appName = $config['appClass'];
