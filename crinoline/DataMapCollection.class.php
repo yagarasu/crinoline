@@ -116,12 +116,9 @@
 		 */
 		public function searchFor($filters=array())
 		{
-			echo "<h2>filtering</h2>";
 			return array_filter($this->collection, function($el) use (&$filters) {
-				echo "<hr><p>Element: ".$el->title."</p>";
 				$returnEl = true;
 				foreach ($filters as $key=>$value) {
-					echo "<p>Checking filter: ".$key."-".$value."</p>";
 					$returnEl = $returnEl && $this->searchFor_compare($el, $key, $value);
 				}
 				return $returnEl;
@@ -139,7 +136,6 @@
 			$comparator = substr($value, 0, 1);
 			$value = (strpos('=!~/', $comparator)!==false) ? substr($value, 1) : $value;
 			$comparator = (strpos('=!~/', $comparator)!==false) ? $comparator : '=';
-			echo "<p>Comparator: ".$comparator."</p>";
 			switch ($comparator) {
 				case '!':
 					return ($el->$key!==$value);

@@ -8,6 +8,7 @@
     class PluginManager extends EventTrigger {
         
         private $plugins = array();
+        private $pluginsConfig = array();
         
         /**
          * Require the plugins
@@ -19,6 +20,10 @@
             }
         }
 
+        /**
+         * Loads a single plugin
+         * @param  array $plugin Plugin data to load
+         */
         private function loadSinglePlugin($plugin) {
             $fn = $plugin['path'] . $plugin['className'] . '.plugin.php';
             if(!is_readable($fn)) throw new Exception('Unable to load "' . $plugin['className'] . '" plugin. File not found or inaccesible.');
@@ -35,8 +40,13 @@
             }
             $pluginO->setup($plugin['params']);
             $this->plugins[$plugin['className']] = $pluginO;
+            $this->pluginsConfig[$plugin['className']] = $plugin['params'];
         }
         
+        /**
+         * After the instantiation, all plugins bind() method is called.
+         * @param  App &$app The instance of the main app
+         */
         public function bindTo(&$app) {
             foreach($this->plugins as $p) {
                 $p->bind($app);
@@ -47,8 +57,23 @@
             }
         }
         
+        /**
+         * Returns the plugin
+         * @param  string $name Plugin name to be called
+         * @return IPlugin       Plugin from the plugin storage
+         */
         public function plugin($name) {
             return (isset($this->plugins[$name])) ? $this->plugins[$name] : null;
+        }
+
+        /**
+         * Returns the plugin params passed in config
+         * @param  string $name Plugin name
+         * @return array       Plugin data
+         */
+        public function pluginParams($name)
+        {
+            return (isset($this->pluginParams[$name])) ? $this->pluginParams[$name] : null;
         }
         
     }
