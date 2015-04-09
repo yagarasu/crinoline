@@ -1,7 +1,7 @@
 ![Crinoline Framework](https://raw.githubusercontent.com/yagarasu/crinoline/master/Branding/Logo.jpg "Logo")
 
 ## Current version
-The current version is **0.1.0**, but it's still a *Work in Progress*.
+The current version is **0.1.1**. Not recommended for production sites.
 
 ## What's Crinoline
 Crinoline is a PHP MVP (Model View Presenter) Framework for quick and easy webapp deployment. The main objective is to provide a well planned structure (thus, the name) for the developer. You can focus on the business logic, the models and the views, but all the routing, the session management, the database handling and query construction is already there for you to use whenever you want.
