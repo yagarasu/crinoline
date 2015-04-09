@@ -25,6 +25,7 @@
             $this->addRoute('GET:/login.do', 'HomePresenter', 'loginDo');
             $this->addRoute('GET:/logout/', 'HomePresenter', 'logout');
             $this->addRoute('GET:/youCant/', 'HomePresenter', 'youCant');
+            $this->addRoute('GET:/changeRole/%role%', 'HomePresenter', 'changeRole');
             
             $this->bindEvent('NOTFOUND', array($this, 'hnd_404'));
 

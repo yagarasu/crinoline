@@ -4,6 +4,10 @@
 	 * Global functions
 	 */
 
+	/**
+	 * Relocate the browser even if the headers were already sent
+	 * @param  string $url Address to redirect the browser to
+	 */
 	function relocate($url) {
 		if(!headers_sent()) {
 			header('location:'.$url);
@@ -14,11 +18,29 @@
 		}
 	}
 
+	/**
+	 * appRoot wrapper
+	 * @return string App root path setted in $config
+	 */
 	function appRoot() {
 		global $config;
 		return $config['appRoot'];
 	}
 
+	/**
+	 * Plugin wrapper
+	 * @param  string $plugin Plugin to retrieve
+	 * @return IPlugin         Plugin requested or null
+	 */
+	function plg($plugin) {
+		global $plugins;
+		return $plugins->plugin($plugin);
+	}
+
+	/**
+	 * Includes a file searching the alternative directories
+	 * @param  string $file File to include
+	 */
 	function includeFile($file) {
 		if(is_readable($file)) {
 			include $file;

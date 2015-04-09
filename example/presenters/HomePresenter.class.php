@@ -4,15 +4,14 @@
         
         public function main($args) {
             echo "main";
-            global $plugins;
-            var_dump($plugins->plugin('CRSession')->hasKey());
+            var_dump(plg('CRSession')->hasKey());
         }
         
         public function loginDo($args) {
             echo "do login!!!";
             
-            global $plugins;
-            $plugins->plugin('CRSession')->grantKey();
+            plg('CRSession')->grantKey();
+            plg('CRSession')->setData('role', 'user');
             
             echo '<a href="../">Back</a>';
         }
@@ -20,20 +19,25 @@
         public function login($args)
         {
             echo 'Do login: <a href="http://localhost/crinoline/example/login.do">now!!!</a>';
-            global $plugins;
-            var_dump($plugins->plugin('CRRoles')->getRoles());
+            var_dump(plg('CRRoles')->getRoles());
         }
 
         public function logout($args) {
-            global $plugins;
-            $plugins->plugin('CRSession')->revokeKey();
+            plg('CRSession')->revokeKey();
             relocate('/');
         }
 
         public function youCant($args) {
-            global $plugins;
-            if(!$plugins->plugin('CRRoles')->can('action2')) throw new Exception('User can not to this.');
-            echo "User can do this";
+            if(!plg('CRRoles')->userCan('action2')) throw new Exception('User "' . plg('CRRoles')->userIs() . '" can not to this.');
+            echo "User ".plg('CRRoles')->userIs()." can do this";
+        }
+
+        public function changeRole($args) {
+            plg('CRRoles')->changeRole($args['role']);
+
+            echo "changed";
+            
+            echo '<a href="../">Back</a>';
         }
         
     }

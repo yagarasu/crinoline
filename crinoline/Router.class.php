@@ -120,12 +120,14 @@
 					$reqArgs = array();
 					break;
 			}
+			// Merge args and params
+			$fParams = array_merge($params, $reqArgs);
 			// Get the presenter and call it
 			$presenter = ucfirst($presenter);
 			if( class_exists($presenter) ) {
 				$p = new $presenter($params);
 				if( method_exists($p, $action) ) {
-					$p->$action($reqArgs);
+					$p->$action($fParams);
 				} else {
 					throw new Exception("Routing error. {$presenter} can't perform '{$action}'.");
 				}

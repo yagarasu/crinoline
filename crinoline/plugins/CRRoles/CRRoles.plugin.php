@@ -70,11 +70,44 @@
             $this->roles['ANONYMOUS'] = array();
         }
 
-        public function can($action) {
+        /**
+         * Returns whether the current user can perform an action
+         * @param  string $action Action to be tested
+         * @return [type]         [description]
+         */
+        public function userCan($action) {
             global $plugins;
             $role = $plugins->plugin('CRSession')->getData($this->fieldName, 'ANONYMOUS');
             if(!array_key_exists($role, $this->roles)) throw new Exception('Role "' . $role . '" not set.');
             return in_array($action, $this->roles[$role]);
+        }
+
+        /**
+         * Returns the current role that the user has
+         * @return [type] [description]
+         */
+        public function userIs() {
+            global $plugins;
+            return $plugins->plugin('CRSession')->getData($this->fieldName, 'ANONYMOUS');
+        }
+
+        /**
+         * Changes the user role
+         * @param  string $newRole New role to assign
+         * @return string          The role that the user had
+         */
+        public function changeRole($newRole) {
+            global $plugins;
+            $old = $plugins->plugin('CRSession')->getData($this->fieldName, 'ANONYMOUS');
+            $this->triggerEvent('ROLECHANGE', array(
+                'old' => $old,
+                'new' => $newRole
+            ));
+            $this->triggerEvent('ROLECHANGE:'.$newRole, array(
+                'old' => $old
+            ));
+            $plugins->plugin('CRSession')->setData($this->fieldName, $newRole);
+            return $old;
         }
         
     }

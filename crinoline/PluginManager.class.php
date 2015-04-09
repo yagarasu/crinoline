@@ -40,6 +40,10 @@
         public function bindTo(&$app) {
             foreach($this->plugins as $p) {
                 $p->bind($app);
+                $p->bindEvent('ALL', function($args) use (&$app) {
+                    // Bubble all plugin events to main app
+                    $app->triggerEvent($args['event'], $args);
+                });
             }
         }
         
