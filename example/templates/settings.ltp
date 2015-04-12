@@ -1,0 +1,37 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+~{ include src="templates/header.ltp" }~
+
+<div class="row">
+	<div class="col-md-12">
+		<h1>Settings</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8">
+		<h2>Global settings</h2>
+		<form class="form-horizontal" action="~{{ $approot }}~admin/" method="post">
+			<div class="form-group">
+				<label for="msg" class="col-sm-3 control-label">Welcome message</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="msg" name="msg" value="~{{ $conf:welcome }}~" placeholder="Message ...">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="col-md-4">
+		<div class="well">
+			<p>Here you can see an example of a restricted user area by user permissions. Only logged users with global-admin can see this screen.</p>
+			<p>Of course, if you don't protect your .ltp files well enough with propper server settings, anyone can look at your templates.</p>
+		</div>
+		<div class="well">
+			<p>To persist this data, we are using a <em>SQLite Config Driver</em> saving everything into <em>softconfig.db</em>.</p>
+		</div>
+	</div>
+</div>
+
+~{ include src="templates/footer.ltp" }~

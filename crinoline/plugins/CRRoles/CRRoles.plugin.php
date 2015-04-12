@@ -43,7 +43,6 @@
          * @param  App &$app The main app to listen to
          */
         public function bind(&$app) {
-            $app->bindEvent('BEFOREROUTING', array($this, 'hnd_beforeRouting'));
         }
 
         /**

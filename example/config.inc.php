@@ -38,13 +38,18 @@
             'path'      => CRINOLINE_CORE . 'plugins/CRSession/',
             'params'    => array(
                 'sessionName' => 'CrinolineExample'
-            )
+            ),
         ),
         array(
             'className' => 'CRRoles',
             'path'      => CRINOLINE_CORE . 'plugins/CRRoles/',
-            'params'    => array()
-        )
+            'params'    => array(),
+        ),
+        array(
+            'className' => 'CRLaces',
+            'path'      => CRINOLINE_CORE . 'plugins/CRLaces/',
+            'params'    => array(),
+        ),
     );
 
 ?>

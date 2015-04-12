@@ -38,6 +38,9 @@
                     }
                 }
             }
+            $plugin['params'] = (isset($plugin['params'])) ? $plugin['params'] : array();
+            $plugin['params']['className'] = $plugin['className'];
+            $plugin['params']['path'] = $plugin['path'];
             $pluginO->setup($plugin['params']);
             $this->plugins[$plugin['className']] = $pluginO;
             $this->pluginsConfig[$plugin['className']] = $plugin['params'];

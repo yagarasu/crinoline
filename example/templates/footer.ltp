@@ -1,0 +1,17 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+		
+		<hr>
+
+		<footer class="footer">
+			<p>By Alexys Hegmann "Yagarasu" under GNU LGLP v3 license.</p>
+		</footer>
+
+	</div> <!-- /container -->
+
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	</body>
+</html>

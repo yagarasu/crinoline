@@ -4,13 +4,13 @@
 	 * Returns the roles to be used
 	 * @return array Roles to be used
 	 */
-	function example_roles_get() {
+	function myapp_roles_get() {
 		return array(
-			'user' => array(
-				'action1'
+			'USER' => array(
+				'user-details-view'
 			),
-			'admin' => array(
-				'action2'
+			'ADMIN' => array(
+				'global-admin'
 			)
 		);
 	}

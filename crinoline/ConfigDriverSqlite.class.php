@@ -18,16 +18,18 @@
         }
         
         public function get($key, $default="") {
-            $res = $this->db->querySingle("SELECT value FROM " . $this->dbtable . " WHERE key='" . $key . "';");
+            $res = $this->db->querySingle("SELECT val FROM " . $this->dbtable . " WHERE key='" . $key . "';");
             return ($res===null) ? $default : unserialize($res);
         }
         
         public function set($key, $value) {
+            echo "<p>Set $key : $value</p>";
             $value = $this->db->escapeString( serialize($value) );
+            echo "<p>Exists: ".$this->exists($key)."</p>";
             if(!$this->exists($key)) {
-                $this->db->exec("INSERT INTO " . $this->dbtable . "(key, value) VALUES ('" . $key . "', '" . $value . "');");
+                $this->db->exec("INSERT INTO " . $this->dbtable . "(key, val) VALUES ('" . $key . "', '" . $value . "');");
             } else {
-                $this->db->exec("UPDATE " . $this->dbtable . " SET value='" . $value . "' WHERE key='" . $key . "';");
+                $this->db->exec("UPDATE " . $this->dbtable . " SET val='" . $value . "' WHERE key='" . $key . "';");
             }
             
         }
@@ -39,7 +41,7 @@
         
         public function fetch() {
             $this->db = new SQLite3($this->dbfile, SQLITE3_OPEN_READWRITE|SQLITE3_OPEN_CREATE, $this->encription);
-            $this->db->exec("CREATE TABLE IF NOT EXISTS " . $this->dbtable . "(key TEXT PRIMARY KEY NOT NULL, value TEXT)");
+            $this->db->exec("CREATE TABLE IF NOT EXISTS " . $this->dbtable . "(_id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT NOT NULL UNIQUE, val TEXT)");
         }
         
         public function update() {

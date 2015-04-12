@@ -19,6 +19,15 @@
 	}
 
 	/**
+	 * $app wrapper
+	 * @return App Main app object
+	 */
+	function app() {
+		global $app;
+		return $app;
+	}
+
+	/**
 	 * appRoot wrapper
 	 * @return string App root path setted in $config
 	 */

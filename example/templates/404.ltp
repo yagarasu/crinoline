@@ -1,0 +1,11 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+~{ include src="templates/header.ltp" }~
+
+<div class="row">
+	<div class="col-md-12">
+		<h1>Not found</h1>
+		<p class="lead">I can't find that address.</p>
+	</div>
+</div>
+
+~{ include src="templates/footer.ltp" }~
