@@ -46,6 +46,11 @@
             'params'    => array(),
         ),
         array(
+            'className' => 'CRAlerts',
+            'path'      => CRINOLINE_CORE . 'plugins/CRAlerts/',
+            'params'    => array(),
+        ),
+        array(
             'className' => 'CRLaces',
             'path'      => CRINOLINE_CORE . 'plugins/CRLaces/',
             'params'    => array(),

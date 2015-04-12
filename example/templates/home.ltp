@@ -1,6 +1,8 @@
 {{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
 ~{ include src="templates/header.ltp" }~
 
+~{ hook name="ALERTS" }~
+
 <div class="jumbotron">
 	<h2 class="pull-right">v 1.0.0</h2>
 	<h1>Crinoline</h1>

@@ -73,6 +73,15 @@
                 'email' => 'Unknown',
             )));
             plg('CRLaces')->setIntoContext('$user:role', plg('CRRoles')->userIs());
+            plg('CRLaces')->registerHookInContext('ALERTS', function($input, $attrs) {
+                $alerts = plg('CRAlerts')->getAlerts();
+                if(count($alerts)===0) return $input;
+                $input .= '<ul>';
+                foreach ($alerts as $alert) {
+                    $input .= '<li>'.$alert['message'].'</li>';
+                }
+                return $input.'</ul>';
+            });
         }
         
     }
