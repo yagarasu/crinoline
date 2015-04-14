@@ -7,6 +7,9 @@
      * @version 1.0.0
      */
     class CRAlerts extends EventTrigger implements IPlugin {
+        
+        const CRALERTS_ALERT_TYPE_ONEUSE = 0;
+        const CRALERTS_ALERT_TYPE_PERMANENT = 1;
 
         /**
          * Retrieves metadata
@@ -41,21 +44,30 @@
         public function bind(&$app) {
         }
 
-        public function addAlert($message, $level=0) {
+        public function addAlert($message, $level=0, $type=0) {
             $this->triggerEvent('ADDALERT', array(
                 'message' => $message,
-                'level'   => $level
+                'level'   => $level,
+                'type'    => $type,
             ));
             $a = plg('CRSession')->getData('cralerts_alerts', array());            
             array_push( $a , array(
                 'message'   => $message,
-                'level'     => $level
+                'level'     => $level,
+                'type'    => $type,
             ) );
             plg('CRSession')->setData('cralerts_alerts', $a);
         }
 
         public function getAlerts() {
-            return plg('CRSession')->getData('cralerts_alerts', array());
+            $alerts = plg('CRSession')->getData('cralerts_alerts', array());
+            $nAlerts = array();
+            for($i=0; $i<count($alerts); $i++) {
+                if($alerts[$i]['type']===self::CRALERTS_ALERT_TYPE_ONEUSE) continue;
+                array_push( $nAlerts , $alerts[$i] );
+            }
+            plg('CRSession')->setData('cralerts_alerts', $nAlerts);
+            return $alerts;
         }
 
     }

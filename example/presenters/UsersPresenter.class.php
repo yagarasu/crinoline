@@ -38,7 +38,7 @@
 				plg('CRRoles')->changeRole('ADMIN');
 			}
 
-			plg('CRAlerts')->addAlert('Successfully logged in.');
+			plg('CRAlerts')->addAlert('Successfully logged in.', 1);
 
 			relocate( approot() );
 			

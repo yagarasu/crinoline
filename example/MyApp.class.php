@@ -76,9 +76,13 @@
             plg('CRLaces')->registerHookInContext('ALERTS', function($input, $attrs) {
                 $alerts = plg('CRAlerts')->getAlerts();
                 if(count($alerts)===0) return $input;
-                $input .= '<ul>';
                 foreach ($alerts as $alert) {
-                    $input .= '<li>'.$alert['message'].'</li>';
+                    if($alert['level']===3) plg('CRLaces')->setIntoContext('$alertClass','alert-danger');
+                    if($alert['level']===2) plg('CRLaces')->setIntoContext('$alertClass','alert-warning');
+                    if($alert['level']===1) plg('CRLaces')->setIntoContext('$alertClass','alert-success');
+                    if($alert['level']===0) plg('CRLaces')->setIntoContext('$alertClass','alert-info');
+                    plg('CRLaces')->setIntoContext('$alertMessage',$alert['message']);
+                    $input .= plg('CRLaces')->loadAndParse('templates/alert.ltp');
                 }
                 return $input.'</ul>';
             });
