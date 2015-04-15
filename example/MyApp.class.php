@@ -14,11 +14,18 @@
          */
         public function init() {
             
-            $this->dbData = array(
+            /*$this->dbData = array(
                 'host'  => getenv('IP'),
                 'user'  => getenv('C9_USER'),
                 'pass'  => '',
                 'name'  => 'crinolineEx',
+            );*/
+
+            $this->dbData = array(
+                'host'  => 'localhost',
+                'user'  => 'root',
+                'pass'  => 'root',
+                'name'  => 'cr-example',
             );
 
             $this->setRoutes();
@@ -47,6 +54,9 @@
             $this->addRoute('POST:/admin/', 'UsersPresenter', 'admin_update');
             
             $this->addRoute('GET:/contacts', 'ContactsPresenter', 'main');
+            $this->addRoute('GET:/contacts/new/', 'ContactsPresenter', 'create_form');
+            $this->addRoute('POST:/contacts/new/', 'ContactsPresenter', 'create_save');
+            $this->addRoute('GET:/contacts/edit/%id%', 'ContactsPresenter', 'edit');
             $this->addRoute('GET:/contacts/delete/%id%', 'ContactsPresenter', 'delete');
         }
 

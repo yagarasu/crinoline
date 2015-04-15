@@ -1,0 +1,46 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+
+~ { include src="templates/header.ltp" }~
+
+<div class="row">
+	<div class="col-md-12">
+		<h1>Contacts</h1>
+		<p class="lead">CRUD operations example.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8">
+		<h2>New contact <a href="#" class="btn btn-danger pull-right">Cancel</a></h2>
+		<form class="form-horizontal" method="post" action="#">
+			<div class="form-group">
+				<label for="name" class="col-sm-2 control-label">Nombre</label>
+				<div class="col-sm-10">
+					<input type="text" id="name" name="name" class="form-control" placeholder="Name">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="email" class="col-sm-2 control-label">E-mail</label>
+				<div class="col-sm-10">
+					<input type="email" id="email" name="email" class="form-control" placeholder="E-mail">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="phone" class="col-sm-2 control-label">Phone</label>
+				<div class="col-sm-10">
+					<input type="text" id="phone" name="phone" class="form-control" placeholder="Phone">
+				</div>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary" type="submit">Ok</button>
+			</div>
+		</form>
+	</div>
+	<div class="col-md-4">
+		<div class="well">
+			<p>Here you can see an example of a restricted user area. Only logged users can see this screen.</p>
+			<p>Of course, if you don't protect your .ltp files well enough with propper server settings, anyone can look at your templates.</p>
+		</div>
+	</div>
+</div>
+
+~{ include src="templates/footer.ltp" }~

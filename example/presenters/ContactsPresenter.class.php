@@ -15,6 +15,25 @@
         	plg('CRLaces')->setIntoContext('$contacts', $cContacts->toArray());
             plg('CRLaces')->loadAndRender('templates/contacts-all.ltp');
         }
+
+        public function create_form($args) {
+            plg('CRLaces')->loadAndRender('templates/header.ltp');
+            plg('CRLaces')->loadAndRender('templates/contacts-new.ltp');
+        }
+
+        public function create_save($args) {
+            $contact = new ContactMap();
+            $contact->name = $args['name'];
+            $contact->email = $args['email'];
+            $contact->phone = $args['phone'];
+            $contact->save();
+            plg('CRAlerts')->addAlert('Contact "'.$args['name'].'" created successfully.');
+            relocate( appRoot() . 'contacts/' );
+        }
+
+        public function edit($args) {
+            # code...
+        }
         
         public function delete($args) {
             $contact = new ContactMap();
