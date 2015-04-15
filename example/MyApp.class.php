@@ -7,11 +7,19 @@
         
         // Soft configurations
         public $softconf = null;
+        public $dbData = null; 
         
         /**
          * Init the app
          */
         public function init() {
+            
+            $this->dbData = array(
+                'host'  => getenv('IP'),
+                'user'  => getenv('C9_USER'),
+                'pass'  => '',
+                'name'  => 'crinolineEx',
+            );
 
             $this->setRoutes();
             $this->bindEvents();  
@@ -30,12 +38,16 @@
         private function setRoutes() {
             $this->addRoute('ALL:/', 'HomePresenter', 'main');
             $this->addRoute('ALL:/about/', 'HomePresenter', 'about');
+            $this->addRoute('ALL:/contact/', 'HomePresenter', 'contact');
 
             $this->addRoute('GET:/user/', 'UsersPresenter', 'main');
             $this->addRoute('POST:/user/login/', 'UsersPresenter', 'login');
             $this->addRoute('GET:/user/logout/', 'UsersPresenter', 'logout');
             $this->addRoute('GET:/admin/', 'UsersPresenter', 'admin');
             $this->addRoute('POST:/admin/', 'UsersPresenter', 'admin_update');
+            
+            $this->addRoute('GET:/contacts', 'ContactsPresenter', 'main');
+            $this->addRoute('GET:/contacts/delete/%id%', 'ContactsPresenter', 'delete');
         }
 
         /**

@@ -90,12 +90,14 @@
 		/**
 		 * Overrides all data with the source.
 		 * @param  array $source Assoc array with the data
-		 * @todo BUG: if you set a reserved property this way, it will be unaccesible forever.
+		 * @todo BUG: if you set a reserved property this way, it will be unaccesible forever. -- EDIT> maybe this will work
 		 */
 		public function fromArray($source)
 		{
 			if(!is_array($source)) throw new Exception("Source must be an assoc array");
-			$this->data = $source;
+			foreach($source as $k=>$v) {
+				$this->$k = $v;
+			}
 		}
 
 	}

@@ -12,11 +12,24 @@
 		public $length = 0;
 
 		/**
-		 * Returns the collection array
-		 * @return array The current collection
+		 * Flattens the collection array
+		 * @return array The current collection flattened to a nested assoc array
 		 */
 		public function toArray()
 		{
+			$col = $this->collection;
+			$final = array();
+			foreach($col as $c) {
+				array_push($final, $c->toArray());
+			}
+			return $final;
+		}
+		
+		/**
+		 * Returns the collection array
+		 * @return array The current collection
+		 */
+		public function getDataMaps() {
 			return $this->collection;
 		}
 

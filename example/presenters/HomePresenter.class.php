@@ -11,6 +11,10 @@
             plg('CRLaces')->loadAndRender('templates/about.ltp');
         }
         
+        public function contact($args) {
+            plg('CRLaces')->loadAndRender('templates/contact.ltp');
+        }
+        
     }
 
 ?>

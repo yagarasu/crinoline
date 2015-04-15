@@ -49,8 +49,8 @@ class LaceForeach extends Lace implements iLace {
 				$tmp = $hdr . $this->cont;
 				$output .= $l->parse($tmp);
 			}
+			if($oldAs!==null) $context->set($as, $oldAs);
 		}
-		if($oldAs!==null) $context->set($as, $oldAs);
 		$fOut = Filters::filterWith($output, $this->filters);
 		if($this->id!==null) $context->set($this->id, $fOut);
 		return $fOut;

@@ -5,7 +5,11 @@
      * 
      * Please fill this variables with your own data
      */
-     
+    
+    // Error reporting settings
+    // Change if you want to hide all or show all.
+    error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT );
+    
     // Override Crinoline Core path
     // If you change the default structure, state where the core files are.
     // Use trailing slash.
