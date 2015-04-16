@@ -7,10 +7,12 @@
 	function myapp_roles_get() {
 		return array(
 			'USER' => array(
-				'user-details-view'
+				'user-details-view',
+				'contacts-admin',
 			),
 			'ADMIN' => array(
-				'global-admin'
+				'global-admin',
+				'contacts-admin',
 			)
 		);
 	}

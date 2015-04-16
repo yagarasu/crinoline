@@ -56,6 +56,7 @@
 				~{ if [$user:role == "ADMIN"] }
 				<a class="navbar-brand" href="#">Administrator</a>
 				<ul class="nav navbar-nav navbar-right">
+					<li><a href="~{{ $approot }}~contacts/">Contacts</a></li>
 					<li><a href="~{{ $approot }}~admin/">Site Settings</a></li>
 					<li><a href="~{{ $approot }}~user/">Details</a></li>
 					<li><a href="~{{ $approot }}~user/logout">Logout</a></li>
@@ -64,6 +65,7 @@
 				~{ if [$user:role == "USER"] }
 				<a class="navbar-brand" href="#">User</a>
 				<ul class="nav navbar-nav navbar-right">
+					<li><a href="~{{ $approot }}~contacts/">Contacts</a></li>
 					<li><a href="~{{ $approot }}~user/">Details</a></li>
 					<li><a href="~{{ $approot }}~user/logout">Logout</a></li>
 				</ul>

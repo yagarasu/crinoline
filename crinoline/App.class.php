@@ -35,6 +35,10 @@
                 $this->router->parseRoute($r_url);
             }
         }
+
+        public function getCurrentRoute() {
+            return $this->router->getCurrentRoute();
+        }
         
     }
 

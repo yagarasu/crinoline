@@ -37,6 +37,15 @@
 	}
 
 	/**
+	 * Current Route wrapper
+	 * @return string Current route
+	 */
+	function currentRoute() {
+		global $app;
+		return $app->getCurrentRoute();
+	}
+
+	/**
 	 * Plugin wrapper
 	 * @param  string $plugin Plugin to retrieve
 	 * @return IPlugin         Plugin requested or null

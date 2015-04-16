@@ -1,7 +1,5 @@
 {{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
 
-~ { include src="templates/header.ltp" }~
-
 <div class="row">
 	<div class="col-md-12">
 		<h1>Contacts</h1>
@@ -10,7 +8,7 @@
 </div>
 <div class="row">
 	<div class="col-md-8">
-		<h2>New contact <a href="#" class="btn btn-danger pull-right">Cancel</a></h2>
+		<h2>New contact <a href="~{{$approot}}~contacts/" class="btn btn-danger pull-right">Cancel</a></h2>
 		<form class="form-horizontal" method="post" action="#">
 			<div class="form-group">
 				<label for="name" class="col-sm-2 control-label">Name</label>
@@ -37,8 +35,7 @@
 	</div>
 	<div class="col-md-4">
 		<div class="well">
-			<p>Here you can see an example of a restricted user area. Only logged users can see this screen.</p>
-			<p>Of course, if you don't protect your .ltp files well enough with propper server settings, anyone can look at your templates.</p>
+			<p>Here you can edit or create a new row in the Database with the DBDataMap. It automatically knows when to use INSERT or UPDATE.</p>
 		</div>
 	</div>
 </div>

@@ -85,7 +85,7 @@
         private function compileRegex($route) {
             $str = str_replace('/', '\/', $route);
             $str = str_replace(':', '\:', $str);
-            $str = preg_replace('/\*/', '[a-zA-Z0-9-_]+', $str);
+            $str = preg_replace('/\*/', '[a-zA-Z0-9-_]*', $str);
             $str = preg_replace('/^ALL\\\:/', '(?:GET|POST|PUT|DELETE)\\\:', $str);
             $str .= (substr($str, -2, 2)==='\/') ? '?' : '\/?';
             return '/^' . $str . '$/';

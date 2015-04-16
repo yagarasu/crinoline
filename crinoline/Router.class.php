@@ -9,6 +9,7 @@
 	class Router extends EventTrigger {
 
 		private $routes = array();
+		private $cRoute = '';
 
 		public function __construct( $routes=array() ) {
 			$this->setRoutes($routes);
@@ -75,6 +76,7 @@
 						'args'			=> $matches
 					));
 
+					$this->cRoute = $route;
 					$this->enroute($p[0], $p[1], $method, $matches);
 					
 					$this->triggerEvent("AFTERROUTING", array(
@@ -85,6 +87,8 @@
 						'action'		=> $p[1],
 						'args'			=> $matches
 					));
+
+					$this->cRoute = '';
 
 					return;
 				}
@@ -136,6 +140,11 @@
 			}
 		}
 
+		/**
+		 * Creates a regex from the human readable route
+		 * @param  string $route Human readable route
+		 * @return string        Regex ready string to parse the request
+		 */
 		private function regexFromRoute($route='') {
 			$route = str_replace('/', '\/', $route);
 			$route = str_replace(':', '\:', $route);
@@ -144,6 +153,14 @@
 			$route = preg_replace('/%([\w\d]+)%/i', '(?P<$1>[\w\d]+)', $route);
 			$route .= (substr($route, -2, 2)==='\/') ? '?' : '\/?';
 			return '/^'.$route.'$/i';
+		}
+
+		/**
+		 * Returns the current route.
+		 * @return string Current route
+		 */
+		public function getCurrentRoute() {
+			return $this->cRoute;
 		}
 		
 	}

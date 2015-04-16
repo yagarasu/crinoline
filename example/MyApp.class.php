@@ -59,6 +59,11 @@
             $this->addRoute('GET:/contacts/edit/%id%', 'ContactsPresenter', 'edit_form');
             $this->addRoute('POST:/contacts/edit/%id%', 'ContactsPresenter', 'edit_save');
             $this->addRoute('GET:/contacts/delete/%id%', 'ContactsPresenter', 'delete');
+
+            plg('CRSession')->protectRoute('ALL:/contacts/*', function() {
+                throw new Exception('You must be logged in to access this.');
+                die();
+            });
         }
 
         /**
@@ -90,7 +95,9 @@
          * @param  array $args Event array
          */
         public function hnd_parse($args) {
+            // Promote to CRLaces core as "magic" variables, maybe...
             plg('CRLaces')->setIntoContext('$approot', appRoot());
+            plg('CRLaces')->setIntoContext('$currentroute', currentRoute());
             plg('CRLaces')->setIntoContext('$user', plg('CRSession')->getData('user', array(
                 'name' => 'Unknown',
                 'email' => 'Unknown',

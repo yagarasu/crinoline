@@ -38,8 +38,7 @@
 	</div>
 	<div class="col-md-4">
 		<div class="well">
-			<p>Here you can see an example of a restricted user area. Only logged users can see this screen.</p>
-			<p>Of course, if you don't protect your .ltp files well enough with propper server settings, anyone can look at your templates.</p>
+			<p>Here you can see an example of some CRUD operations made with the DBDataMaps and DBDataMapCollections. It´s as easy as binding the correct tables and all the queries are constructed by the object.</p>
 		</div>
 	</div>
 </div>
