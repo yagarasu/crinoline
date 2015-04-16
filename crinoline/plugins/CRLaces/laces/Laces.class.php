@@ -34,16 +34,33 @@ class Laces {
 		$this->context->set('$_HEADER', $header);
 		$pattern = '/
 			(?:
-				(~\{ \s* (?<fulltag> \w+(\#\w+)?) \s* (\[.*?\])? (\w+=\".*?\" \s*)* \s* (\|\s*\w+\s*)* \} .*? \{ \s* \k<fulltag> \s* \}~)
+				(~\{ \s* (?<fulltag> \w+(\#\w+)?) \s* (\[.*?\])? (\w+=(?>\".*?\") \s*)* \s* (\|\s*\w+\s*)* \} .*? \{ \s* \k<fulltag> \s* \}~)
 				|
 				(~\{\{ \s* ((\$\w+(\:\w+)*) | (\#\w+) | (\[.*?\]) ) \s* (\|\s*\w+\s*)* \}\}~)
 				|
-				(~{ \s* \w+(\#\w+)? \s* (\(.*?\))? \s* (\w+=\".*?\")* \s* (\|\s*\w+\s*)* \}~)
+				(~{ \s* \w+(\#\w+)? \s* (\(.*?\))? \s* (\w+=(?>\".*?\"))* \s* (\|\s*\w+\s*)* \}~)
 			)
 		/six';
 		$buffer = preg_replace_callback($pattern, array($this, 'parse_preg_replace_cb'), $buffer);
-		//return ltrim( "<!-- HEADER METADATA: \n " . var_export($header, true) . "\n -->" . $buffer );
+		if($buffer===null) {
+			throw new Exception('There was an error with the parsing of this file. Error: ' . $this->preg_error_parse(preg_last_error()));
+		}
 		return ltrim( $buffer );
+	}
+
+	/**
+	 * Takes a PREG error and returns the description
+	 * @param  int $err PREG error code
+	 * @return string      Description
+	 */
+	private function preg_error_parse($err) {
+		if($err == PREG_NO_ERROR) return 'No error';
+		if($err == PREG_INTERNAL_ERROR) return 'Internal error';
+		if($err == PREG_BACKTRACK_LIMIT_ERROR) return 'Backtrack limit error';
+		if($err == PREG_RECURSION_LIMIT_ERROR) return 'Recursion limit error';
+		if($err == PREG_BAD_UTF8_ERROR) return 'Bad UTF8 error';
+		if($err == PREG_BAD_UTF8_OFFSET_ERROR) return 'Bad UTF8 offset error';
+		return 'Unknown error';
 	}
 	
 	/**

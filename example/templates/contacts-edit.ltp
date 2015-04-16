@@ -1,4 +1,5 @@
 {{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+~{ include src="templates/header.ltp" }~
 
 <div class="row">
 	<div class="col-md-12">
