@@ -42,7 +42,8 @@ class Laces {
 			)
 		/six';
 		$buffer = preg_replace_callback($pattern, array($this, 'parse_preg_replace_cb'), $buffer);
-		return ltrim( "<!-- HEADER METADATA: \n " . var_export($header, true) . "\n -->" . $buffer );
+		//return ltrim( "<!-- HEADER METADATA: \n " . var_export($header, true) . "\n -->" . $buffer );
+		return ltrim( $buffer );
 	}
 	
 	/**
