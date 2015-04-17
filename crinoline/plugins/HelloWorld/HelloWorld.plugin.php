@@ -6,6 +6,7 @@
         
         public function getInfo() {
             return array(
+                'className' => 'HelloWorld',
                 'version' => '1.0.0',
                 'name' => 'Hello World Plugin',
                 'desc' => 'Test plugin to debug Plugin API.',
@@ -22,6 +23,10 @@
         
         public function bind(&$app) {
             $app->bindEvent('AFTERROUTING', array($this, 'onEvent'));
+        }
+        
+        public function coupleWith(&$plugin) {
+            // No coupling available
         }
         
         public function onEvent($args) {

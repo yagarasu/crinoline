@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
 		<!-- Propietary css -->
-		<link rel="stylesheet" href="~{{ $approot }}~css/main.css">
+		<link rel="stylesheet" href="~{{ $_ROOT }}~css/main.css">
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -30,9 +30,9 @@
 		<header class="clearfix">
 			<nav>
 				<ul class="nav nav-pills pull-right">
-					<li role="presentation" class="active"><a href="~{{ $approot }}~">Home</a></li>
-					<li role="presentation"><a href="~{{ $approot }}~about">About</a></li>
-					<li role="presentation"><a href="~{{ $approot }}~contact">Contact</a></li>
+					<li role="presentation" class="active"><a href="~{{ $_ROOT }}~">Home</a></li>
+					<li role="presentation"><a href="~{{ $_ROOT }}~about">About</a></li>
+					<li role="presentation"><a href="~{{ $_ROOT }}~contact">Contact</a></li>
 				</ul>
 			</nav>
 			<h3>Crinoline Example</h3>
@@ -41,9 +41,9 @@
 
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">	
-				~{ if [$user:role == "ANONYMOUS"] }
+				~{ if [$_ROLE == "ANONYMOUS"] }
 				<a class="navbar-brand" href="#">Anonymous</a>
-				<form class="navbar-form navbar-right" action="~{{ $approot }}~user/login" method="post">
+				<form class="navbar-form navbar-right" action="~{{ $_ROOT }}~user/login" method="post">
 					<div class="form-group">
 						<input type="text" name="user" placeholder="user" class="form-control">
 					</div>
@@ -53,21 +53,21 @@
 					<button type="submit" class="btn btn-primary">Sign in</button>
 				</form>
 				{ if }~	
-				~{ if [$user:role == "ADMIN"] }
+				~{ if [$_ROLE == "ADMIN"] }
 				<a class="navbar-brand" href="#">Administrator</a>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="~{{ $approot }}~contacts/">Contacts</a></li>
-					<li><a href="~{{ $approot }}~admin/">Site Settings</a></li>
-					<li><a href="~{{ $approot }}~user/">Details</a></li>
-					<li><a href="~{{ $approot }}~user/logout">Logout</a></li>
+					<li><a href="~{{ $_ROOT }}~contacts/">Contacts</a></li>
+					<li><a href="~{{ $_ROOT }}~admin/">Site Settings</a></li>
+					<li><a href="~{{ $_ROOT }}~user/">Details</a></li>
+					<li><a href="~{{ $_ROOT }}~user/logout">Logout</a></li>
 				</ul>
 				{ if }~
-				~{ if [$user:role == "USER"] }
+				~{ if [$_ROLE == "USER"] }
 				<a class="navbar-brand" href="#">User</a>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="~{{ $approot }}~contacts/">Contacts</a></li>
-					<li><a href="~{{ $approot }}~user/">Details</a></li>
-					<li><a href="~{{ $approot }}~user/logout">Logout</a></li>
+					<li><a href="~{{ $_ROOT }}~contacts/">Contacts</a></li>
+					<li><a href="~{{ $_ROOT }}~user/">Details</a></li>
+					<li><a href="~{{ $_ROOT }}~user/logout">Logout</a></li>
 				</ul>
 				{ if }~	
 				

@@ -78,5 +78,13 @@
 			throw new Exception('Unable to load "' . $file . '"');
 		}
 	}
+	
+	/**
+	 * Formats an output to be used in debugging
+	 * @param mixed $output The output to format
+	 */
+	function debug_dump($output) {
+		echo '<pre>'.print_r($output,true).'</pre>';
+	}
 
 ?>

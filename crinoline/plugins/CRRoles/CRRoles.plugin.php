@@ -17,6 +17,7 @@
          */
         public function getInfo() {
             return array(
+                'className' => 'CRRoles',
                 'version' => '1.0.0',
                 'name' => 'CRRoles Plugin',
                 'desc' => 'Plugin to add support for roles.',
@@ -43,6 +44,19 @@
          * @param  App &$app The main app to listen to
          */
         public function bind(&$app) {
+        }
+        
+        /**
+         * Allows coupling with other plugins
+         * @param IPlugin &$plugin The plugin to couple with
+         */
+        public function coupleWith(&$plugin) {
+            $info = $plugin->getInfo();
+            if($info['className']==='CRLaces') {
+                if(version_compare($info['version'], '1.0.0', '==')) {
+                    $plugin->setIntoContext('$_ROLE', $this->userIs());
+                }
+            }
         }
 
         /**

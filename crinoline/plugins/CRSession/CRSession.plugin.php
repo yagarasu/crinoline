@@ -17,6 +17,7 @@
          */
         public function getInfo() {
             return array(
+                'className' => 'CRSession',
                 'version' => '1.0.0',
                 'name' => 'CRSession Plugin',
                 'desc' => 'Plugin to manage sessions.',
@@ -42,6 +43,19 @@
          */
         public function bind(&$app) {
             $app->bindEvent('BEFOREROUTING', array($this, 'hnd_beforeRouting'));
+        }
+        
+        /**
+         * Allows coupling with other plugins
+         * @param IPlugin &$plugin The plugin to couple with
+         */
+        public function coupleWith(&$plugin) {
+            $info = $plugin->getInfo();
+            if($info['className']==='CRLaces') {
+                if(version_compare($info['version'], '1.0.0', '==')) {
+                    $plugin->setIntoContext('$_SESSION', $this->allData());
+                }
+            }
         }
         
         /**

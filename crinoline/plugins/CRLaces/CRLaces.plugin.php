@@ -17,6 +17,7 @@
 		 */
 		public function getInfo() {
 			return array(
+				'className' => 'CRLaces',
 				'version' => '1.0.0',
 				'name' => 'CRLaces Plugin',
 				'desc' => 'Plugin to add support for laces.',
@@ -48,7 +49,20 @@
 		 * @param  App &$app The main app to listen to
 		 */
 		public function bind(&$app) {
+			$app->bindEvent('BEFOREROUTING', function($args) {
+				// Insert magic variables into the context
+				$this->context->set( '$_ROOT' , appRoot() ); // App Root
+				$this->context->set( '$_ROUTE' , $args['route'] ); // Current Route
+			});
 		}
+		
+		/**
+         * Allows coupling with other plugins
+         * @param IPlugin &$plugin The plugin to couple with
+         */
+        public function coupleWith(&$plugin) {
+            // No coupling available
+        }
 
 		// Bubble functions
 		public function parse($template) {
@@ -138,6 +152,10 @@
 				'callback' => $callback
 			));
 			$this->context->unregisterHook($hook, $callback);
+		}
+		
+		public function getContext() {
+			return $this->context;
 		}
 		
 	}

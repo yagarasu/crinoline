@@ -14,19 +14,19 @@
          */
         public function init() {
             
-            /*$this->dbData = array(
+            $this->dbData = array(
                 'host'  => getenv('IP'),
                 'user'  => getenv('C9_USER'),
                 'pass'  => '',
                 'name'  => 'crinolineEx',
-            );*/
+            );
 
-            $this->dbData = array(
+            /*$this->dbData = array(
                 'host'  => 'localhost',
                 'user'  => 'root',
                 'pass'  => 'root',
                 'name'  => 'cr-example',
-            );
+            );*/
 
             $this->setRoutes();
             $this->bindEvents();  
@@ -60,6 +60,7 @@
             $this->addRoute('POST:/contacts/edit/%id%', 'ContactsPresenter', 'edit_save');
             $this->addRoute('GET:/contacts/delete/%id%', 'ContactsPresenter', 'delete');
 
+            // Protect everything in contacts/ for users with key only
             plg('CRSession')->protectRoute('ALL:/contacts/*', function() {
                 throw new Exception('You must be logged in to access this.');
                 die();
@@ -70,8 +71,8 @@
          * Binds some events to the main app
          */
         private function bindEvents() {
-            $this->bindEvent('PARSE', array($this, 'hnd_parse'));
-            $this->bindEvent('NOTFOUND', array($this, 'hnd_404'));
+            $this->bindEvent('PARSE', array($this, 'hnd_parse')); // To prepare some data into context before parsing
+            $this->bindEvent('NOTFOUND', array($this, 'hnd_404')); // To handle 404 errors
         }
         
         /**
@@ -95,14 +96,18 @@
          * @param  array $args Event array
          */
         public function hnd_parse($args) {
-            // Promote to CRLaces core as "magic" variables, maybe...
-            plg('CRLaces')->setIntoContext('$approot', appRoot());
-            plg('CRLaces')->setIntoContext('$currentroute', currentRoute());
-            plg('CRLaces')->setIntoContext('$user', plg('CRSession')->getData('user', array(
-                'name' => 'Unknown',
-                'email' => 'Unknown',
-            )));
-            plg('CRLaces')->setIntoContext('$user:role', plg('CRRoles')->userIs());
+            // Set the user variable in the context
+            //plg('CRLaces')->setIntoContext('$user', plg('CRSession')->getData('user', array(
+            //    'name' => 'Unknown',
+            //    'email' => 'Unknown',
+            //)));
+            // Add the role variable to the user
+            //plg('CRLaces')->setIntoContext('$user:role', plg('CRRoles')->userIs());
+            
+            plg('CRSession')->coupleWith(plg('CRLaces'));
+            plg('CRRoles')->coupleWith(plg('CRLaces'));
+            
+            // Handle the ALERTS hook to show the alerts with a template
             plg('CRLaces')->registerHookInContext('ALERTS', function($input, $attrs) {
                 $alerts = plg('CRAlerts')->getAlerts();
                 if(count($alerts)===0) return $input;

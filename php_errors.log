@@ -82,3 +82,20 @@
 [14-Apr-2015 21:54:53 UTC] PHP Strict Standards:  Declaration of ContactMap::save() should be compatible with DBDataMap::save(Database $db) in /home/ubuntu/workspace/crinoline/example/models/ContactMap.class.php on line 3
 [14-Apr-2015 21:54:53 UTC] PHP Strict Standards:  Declaration of ContactMap::load() should be compatible with DBDataMap::load(Database $db, $id) in /home/ubuntu/workspace/crinoline/example/models/ContactMap.class.php on line 3
 [14-Apr-2015 21:54:53 UTC] PHP Strict Standards:  Declaration of ContactMap::destroy() should be compatible with DBDataMap::destroy(Database $db) in /home/ubuntu/workspace/crinoline/example/models/ContactMap.class.php on line 3
+[16-Apr-2015 04:46:32 UTC] PHP Warning:  Missing argument 2 for DataMap::{closure}() in /home/ubuntu/workspace/crinoline/crinoline/DataMap.class.php on line 84
+[16-Apr-2015 04:46:32 UTC] PHP Notice:  Undefined variable: key in /home/ubuntu/workspace/crinoline/crinoline/DataMap.class.php on line 85
+[16-Apr-2015 04:46:32 UTC] PHP Notice:  Undefined variable: data in /home/ubuntu/workspace/crinoline/crinoline/DataMap.class.php on line 85
+[16-Apr-2015 04:46:32 UTC] PHP Warning:  array_key_exists() expects parameter 2 to be array, null given in /home/ubuntu/workspace/crinoline/crinoline/DataMap.class.php on line 85
+[16-Apr-2015 13:39:22 UTC] PHP Warning:  Missing argument 2 for DataMap::{closure}() in /home/ubuntu/workspace/crinoline/crinoline/DataMap.class.php on line 84
+[16-Apr-2015 13:39:22 UTC] PHP Notice:  Undefined variable: key in /home/ubuntu/workspace/crinoline/crinoline/DataMap.class.php on line 85
+[16-Apr-2015 13:39:22 UTC] PHP Notice:  Undefined variable: data in /home/ubuntu/workspace/crinoline/crinoline/DataMap.class.php on line 85
+[16-Apr-2015 13:39:22 UTC] PHP Warning:  array_key_exists() expects parameter 2 to be array, null given in /home/ubuntu/workspace/crinoline/crinoline/DataMap.class.php on line 85
+[17-Apr-2015 03:29:04 UTC] PHP Notice:  Only variable references should be returned by reference in /home/ubuntu/workspace/crinoline/crinoline/PluginManager.class.php on line 69
+[17-Apr-2015 03:29:04 UTC] PHP Notice:  Only variable references should be returned by reference in /home/ubuntu/workspace/crinoline/crinoline/PluginManager.class.php on line 69
+[17-Apr-2015 03:29:04 UTC] PHP Notice:  Only variable references should be returned by reference in /home/ubuntu/workspace/crinoline/crinoline/PluginManager.class.php on line 69
+[17-Apr-2015 03:29:04 UTC] PHP Notice:  Only variable references should be returned by reference in /home/ubuntu/workspace/crinoline/crinoline/PluginManager.class.php on line 69
+[17-Apr-2015 03:29:04 UTC] PHP Notice:  Only variable references should be returned by reference in /home/ubuntu/workspace/crinoline/crinoline/PluginManager.class.php on line 69
+[17-Apr-2015 03:29:04 UTC] PHP Notice:  Only variable references should be returned by reference in /home/ubuntu/workspace/crinoline/crinoline/PluginManager.class.php on line 69
+[17-Apr-2015 03:29:04 UTC] PHP Notice:  Only variable references should be returned by reference in /home/ubuntu/workspace/crinoline/crinoline/PluginManager.class.php on line 69
+[17-Apr-2015 03:29:04 UTC] PHP Notice:  Only variable references should be returned by reference in /home/ubuntu/workspace/crinoline/crinoline/PluginManager.class.php on line 69
+[17-Apr-2015 03:29:04 UTC] PHP Notice:  Only variable references should be returned by reference in /home/ubuntu/workspace/crinoline/crinoline/PluginManager.class.php on line 69

@@ -3,7 +3,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<h1>User: ~{{ $user:name }}~</h1>
+		<h1>User: ~{{ $_SESSION:user:name }}~</h1>
 	</div>
 </div>
 <div class="row">
@@ -11,11 +11,11 @@
 		<h2>User details</h2>
 		<dl class="dl-horizontal">
 			<dt>Name:</dt>
-			<dd>~{{ $user:name }}~</dd>
+			<dd>~{{ $_SESSION:user:name }}~</dd>
 			<dt>Role:</dt>
-			<dd>~{{ $user:role }}~</dd>
+			<dd>~{{ $_ROLE }}~</dd>
 			<dt>Email:</dt>
-			<dd>~{{ $user:email }}~</dd>
+			<dd>~{{ $_SESSION:user:email }}~</dd>
 		</dl>
 	</div>
 	<div class="col-md-4">

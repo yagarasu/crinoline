@@ -17,6 +17,7 @@
          */
         public function getInfo() {
             return array(
+                'className' => 'CRAlerts',
                 'version' => '1.0.0',
                 'name' => 'CRAlerts Plugin',
                 'desc' => 'Plugin to add support for alerts.',
@@ -42,6 +43,14 @@
          * @param  App &$app The main app to listen to
          */
         public function bind(&$app) {
+        }
+        
+        /**
+         * Allows coupling with other plugins
+         * @param IPlugin &$plugin The plugin to couple with
+         */
+        public function coupleWith(&$plugin) {
+            // No coupling available
         }
 
         public function addAlert($message, $level=0, $type=0) {
