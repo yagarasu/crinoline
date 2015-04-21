@@ -1,0 +1,9 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+<div class="form-horizontal">
+	<div class="form-group">
+		<label class="col-sm-3">Name</label>
+		<div class="col-sm-9">
+			<input type="text" placeholder="SomeMap">
+		</div>
+	</div>
+</div>

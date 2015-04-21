@@ -1,0 +1,61 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+<div class="row">
+	<div class="col-md-8">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Method</th>
+					<th>Path</th>
+					<th>Presenter</th>
+					<th>Action</th>
+					<th class="col-sm-2">-</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="route in routes">
+					<td>{{route.method}}</td>
+					<td>{{route.path}}</td>
+					<td>{{route.presenter}}</td>
+					<td>{{route.action}}</td>
+					<td>
+						<a href="#" class="btn btn-danger btn-xs" ng-click="routeDelete(route)"><i class="glyphicon glyphicon-remove"></i></a>
+						<a href="#" class="btn btn-default btn-xs" ng-click="routeMoveUp(route)"><i class="glyphicon glyphicon-arrow-up"></i></a>
+						<a href="#" class="btn btn-default btn-xs" ng-click="routeMoveDown(route)"><i class="glyphicon glyphicon-arrow-down"></i></a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<select class="form-control" ng-model="newRoute.method">
+							<option>ALL</option>
+							<option>GET</option>
+							<option>POST</option>
+							<option>PUT</option>
+							<option>DELETE</option>
+						</select>
+					</td>
+					<td>
+						<input type="text" class="form-control" name="rou-route-path[]" placeholder="/contacts/add" ng-model="newRoute.path">
+					</td>
+					<td>
+						<input type="text" class="form-control" name="rou-route-presenter[]" placeholder="Contacts" ng-model="newRoute.presenter">
+					</td>
+					<td>
+						<input type="text" class="form-control" name="rou-route-action[]" placeholder="add" ng-model="newRoute.action">
+					</td>
+					<td>
+						<a href="#" class="btn btn-success btn-xs" ng-click="routeAdd()"><i class="glyphicon glyphicon-plus"></i> Add route</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-info">
+			<div class="panel-heading">Help</div>
+			<div class="panel-body">
+				<p>This section contains all the routes and the bindings to Presenters and Actions.</p>
+				<p>Remember that the routes are tested in order so, if two routes match, the first one will be taken.</p>
+			</div>
+		</div>
+	</div>
+</div>

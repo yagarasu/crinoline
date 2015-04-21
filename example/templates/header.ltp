@@ -12,7 +12,7 @@
 		<title>Crinoline Example</title>
 
 		<!-- Bootstrap core CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="~{{ $_ROOT }}~css/bootstrap.min.css">
 
 		<!-- Propietary css -->
 		<link rel="stylesheet" href="~{{ $_ROOT }}~css/main.css">

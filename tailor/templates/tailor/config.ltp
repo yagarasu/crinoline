@@ -1,0 +1,40 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+<div class="row">
+	<div class="col-md-8">
+		<div class="navbar navbar-default">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					<li><a href="#"><i class="glyphicon glyphicon-plus"></i> Hardcoded</a></li>
+					<li><a href="#"><i class="glyphicon glyphicon-plus"></i> JSON</a></li>
+					<li><a href="#"><i class="glyphicon glyphicon-plus"></i> MySQL</a></li>
+					<li><a href="#"><i class="glyphicon glyphicon-plus"></i> SQLite</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<a href="#cfg-item-ConfigMySQL" data-toggle="collapse"><i class="glyphicon glyphicon-eye-open"></i> Config (MySQL)</a>
+				<a href="#" class="btn btn-danger btn-xs pull-right"><i class="glyphicon glyphicon-remove"></i></a>
+			</div>
+			<div id="cfg-item-ConfigMySQL" class="collapse">
+				<div class="panel-body">
+					<dl class="dl-horizontal">
+						<dt>Assigned Table</dt>
+						<dd>contacts</dd>
+						<dt>Database</dt>
+						<dd>theMainDB</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-info">
+			<div class="panel-heading">Help</div>
+			<div class="panel-body">
+				<p>This section contains the soft configurations.</p>
+				<p>You can use this section to define where you want to store your configurations that need to be loaded on every request. This are settings that your admins can change without touching the code (except for the hardcoded one).</p>
+			</div>
+		</div>
+	</div>
+</div>

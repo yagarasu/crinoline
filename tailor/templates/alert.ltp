@@ -1,0 +1,5 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+
+<div class="alert ~{{ $alertClass }}~">
+	<p>~{{ $alertMessage }}~</p>
+</div>

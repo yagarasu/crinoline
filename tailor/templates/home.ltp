@@ -1,0 +1,39 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+~{ include src="templates/header.ltp" }~
+
+<div class="row">
+	<div class="col-md-12">
+		<form ng-controller="builder">
+			<div role="tabpanel">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#general" data-toggle="tab">General</a></li>
+					<li role="presentation"><a href="#routes" data-toggle="tab">Routes</a></li>
+					<li role="presentation"><a href="#dbs" data-toggle="tab">Databases</a></li>
+					<li role="presentation"><a href="#models" data-toggle="tab">Models</a></li>
+					<li role="presentation"><a href="#config" data-toggle="tab">Soft configuration</a></li>
+					<button class="btn btn-success pull-right" ng-click="generateCode()">Generate code</button>
+				</ul>
+				<hr>
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="general">
+						~{ include src="templates/tailor/general.ltp" }~
+					</div>
+					<div role="tabpanel" class="tab-pane" id="routes">
+						~{ include src="templates/tailor/routes.ltp" }~
+					</div>
+					<div role="tabpanel" class="tab-pane" id="dbs">
+						~{ include src="templates/tailor/dbs.ltp" }~
+					</div>
+					<div role="tabpanel" class="tab-pane" id="models">
+						~{ include src="templates/tailor/models.ltp" }~
+					</div>
+					<div role="tabpanel" class="tab-pane" id="config">
+						~{ include src="templates/tailor/config.ltp" }~
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+~{ include src="templates/footer.ltp" }~

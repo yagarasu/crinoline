@@ -1,0 +1,66 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+<div class="row">
+	<div class="col-md-8">
+
+		<div class="panel panel-default tabpanel">
+			<div class="panel-heading">
+				<ul class="nav nav-pills" role="tablist">
+					<li class="active"><a href="#mod-neo-dbdatamap" data-toggle="tab">DB DataMap</a></li>
+					<li><a href="#mod-new-dbdatamapcollection" data-toggle="tab">DB DataMap Collection</a></li>
+					<li><a href="#mod-new-datamap" data-toggle="tab">DataMap</a></li>
+					<li><a href="#mod-new-datamapcollection" data-toggle="tab">DataMap Collection</a></li>
+				</ul>
+			</div>
+			<div class="panel-body">
+				<div class="tab-content">
+					<div class="tab-pane active" id="mod-new-dbdatamap" role="tabpanel">
+						<p>asdasdasd dbmap</p>
+						~{ include }~ // completar
+					</div>
+					<div class="tab-pane" id="mod-new-dbdatamapcollection" role="tabpanel">
+						<p>asdasdasd dbcoll</p>
+					</div>
+					<div class="tab-pane" id="mod-new-datamap" role="tabpanel">
+						<p>asdasdasd map</p>
+					</div>
+					<div class="tab-pane" id="mod-new-datamapcollection" role="tabpanel">
+						<p>asdasdasd coll</p>
+					</div>
+				</div><!-- //.tab-content -->
+			</div><!-- //.panelbody -->
+
+			<div class="panel-footer">
+				<button type="button" class="btn btn-success">
+					<i class="glyphicon glyphicon-plus"></i> New model
+				</button>
+			</div>
+		</div>
+
+		<div class="panel panel-default" ng-repeat="model in models">
+			<div class="panel-heading">
+				<a href="#mod-item-{{model.name}}" data-toggle="collapse"><i class="glyphicon glyphicon-eye-open"></i> {{model.name}} ({{model.type}})</a>
+				<a href="#" class="btn btn-danger btn-xs pull-right"><i class="glyphicon glyphicon-remove" ng-click="modelDelete(model)"></i></a>
+			</div>
+			<div id="mod-item-{{model.name}}" class="collapse">
+				<div class="panel-body">
+					<dl class="dl-horizontal">
+						<div ng-repeat="(key, val) in model.settings">
+							<dt>{{key}}</dt>
+							<dd>{{val}}</dd>
+						</div>
+					</dl>
+					<p ng-if="!modelHasSettings(model)">This model doesn't require configuration.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-info">
+			<div class="panel-heading">Help</div>
+			<div class="panel-body">
+				<p>This section contains the DataMaps and Collections.</p>
+				<p>You can set empty models or use the prebuilt MySQL Database binded models</p>
+			</div>
+		</div>
+	</div>
+</div>
