@@ -1,16 +1,34 @@
 {{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
 <div class="row">
 	<div class="col-md-8">
-		<div class="navbar navbar-default">
-			<div class="container-fluid">
-				<ul class="nav navbar-nav">
-					<li><a href="#"><i class="glyphicon glyphicon-plus"></i> Hardcoded</a></li>
-					<li><a href="#"><i class="glyphicon glyphicon-plus"></i> JSON</a></li>
-					<li><a href="#"><i class="glyphicon glyphicon-plus"></i> MySQL</a></li>
-					<li><a href="#"><i class="glyphicon glyphicon-plus"></i> SQLite</a></li>
+
+		<div class="panel panel-default tabpanel">
+			<div class="panel-heading">
+				<ul class="nav nav-pills" role="tablist">
+					<li class="active"><a href="#cfg-new-configdriverhardcode" data-toggle="tab">Hardcoded Configs</a></li>
+					<li><a href="#cfg-new-configdriverjson" data-toggle="tab">JSON Configs</a></li>
+					<li><a href="#cfg-new-configdrivermysql" data-toggle="tab">MySQL Configs</a></li>
+					<li><a href="#cfg-new-configdriversqlite" data-toggle="tab">SQLite Configs</a></li>
 				</ul>
 			</div>
+			<div class="panel-body">
+				<div class="tab-content">
+					<div class="tab-pane active" id="cfg-new-configdriverhardcode" role="tabpanel">
+						~  { include src="templates/tailor/models/new-dbdatamap.ltp" }~
+					</div>
+					<div class="tab-pane" id="cfg-new-configdriverjson" role="tabpanel">
+						~  { include src="templates/tailor/models/new-dbdatamapcollection.ltp" }~
+					</div>
+					<div class="tab-pane" id="cfg-new-configdrivermysql" role="tabpanel">
+						~  { include src="templates/tailor/models/new-datamap.ltp" }~
+					</div>
+					<div class="tab-pane" id="cfg-new-configdriversqlite" role="tabpanel">
+						~  { include src="templates/tailor/models/new-datamapcollection.ltp" }~
+					</div>
+				</div><!-- //.tab-content -->
+			</div><!-- //.panelbody -->
 		</div>
+
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<a href="#cfg-item-ConfigMySQL" data-toggle="collapse"><i class="glyphicon glyphicon-eye-open"></i> Config (MySQL)</a>

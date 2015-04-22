@@ -1,0 +1,26 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+<div class="form-horizontal">
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Name</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" placeholder="ContactCollection" ng-model="newModel.DBDataMapCollection.name">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Base class</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" placeholder="ContactMap" ng-model="newModel.DBDataMapCollection.settings.baseClass">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Assigned table</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" placeholder="contacts" ng-model="newModel.DBDataMapCollection.settings.assignedTable">
+		</div>
+	</div>
+	<div class="form-group">
+		<button type="button" class="btn btn-success col-sm-offset-2" ng-click="modelAdd('DBDataMapCollection')">
+			<i class="glyphicon glyphicon-plus"></i> New model
+		</button>
+	</div>
+</div>

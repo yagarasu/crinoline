@@ -52,6 +52,7 @@ app.controller('builder', function($scope) {
 	};
 	$scope.routeDelete = function(item) {
 		var i = $scope.routes.indexOf(item);
+		if(i===-1) return;
 		$scope.routes.splice(i, 1);
 	};
 	$scope.routeMoveUp = function(item) {
@@ -89,6 +90,7 @@ app.controller('builder', function($scope) {
 	}
 	$scope.databaseDelete = function(item) {
 		var i = $scope.databases.indexOf(item);
+		if(i===-1) return;
 		$scope.databases.splice(i, 1);
 	};
 	$scope.databaseEdit = function(item) {
@@ -124,24 +126,31 @@ app.controller('builder', function($scope) {
 		}
 	];
 	$scope.newModel = {
-		name: '',
-		type: '',
-		settings: {}
-	};
+		DataMap: {name:'',type:'',settings:{}},
+		DataMapCollection: {name:'',type:'',settings:{}},
+		DBDataMap: {name:'',type:'',settings:{}},
+		DBDataMapCollection: {name:'',type:'',settings:{}}
+	}
 	$scope.modelHasSettings = function(model) {
 		return !angular.equals({}, model.settings);
 	};
 	$scope.modelAdd = function(type) {
 		var t = type || 'DataMap';
-		var r = angular.copy($scope.newModel);
+		var r = angular.copy($scope.newModel[type]);
+		r.type = t;
 		$scope.models.push(r);
-		$scope.newModel = {
-			name: '',
-			type: t,
-			settings: {}
-		};
+		$scope.newModel[type] = {name:'',type:'',settings:{}}
+	};
+	$scope.modelDelete = function(item) {
+		for(var i = 0; i < $scope.models.length; i++) {
+			if($scope.models[i].name===item) {
+				$scope.models.splice(i, 1);
+				break;
+			}
+		}
 	};
 
+	
 	$scope.generateCode = function() {
 		console.log("generate!");
 	};
