@@ -14,16 +14,16 @@
 			<div class="panel-body">
 				<div class="tab-content">
 					<div class="tab-pane active" id="cfg-new-configdriverhardcode" role="tabpanel">
-						~  { include src="templates/tailor/models/new-dbdatamap.ltp" }~
+						~{ include src="templates/tailor/configs/new-hardcoded.ltp" }~
 					</div>
 					<div class="tab-pane" id="cfg-new-configdriverjson" role="tabpanel">
-						~  { include src="templates/tailor/models/new-dbdatamapcollection.ltp" }~
+						~{ include src="templates/tailor/configs/new-json.ltp" }~
 					</div>
 					<div class="tab-pane" id="cfg-new-configdrivermysql" role="tabpanel">
-						~  { include src="templates/tailor/models/new-datamap.ltp" }~
+						~{ include src="templates/tailor/configs/new-mysql.ltp" }~
 					</div>
 					<div class="tab-pane" id="cfg-new-configdriversqlite" role="tabpanel">
-						~  { include src="templates/tailor/models/new-datamapcollection.ltp" }~
+						~{ include src="templates/tailor/configs/new-sqlite.ltp" }~
 					</div>
 				</div><!-- //.tab-content -->
 			</div><!-- //.panelbody -->

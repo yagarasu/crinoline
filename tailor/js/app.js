@@ -150,6 +150,14 @@ app.controller('builder', function($scope) {
 		}
 	};
 
+	$scope.configs = [
+	];
+	$scope.newConfig = {
+		Hardcode: {},
+		Json: {},
+		MySQL: {},
+		SQLite: {}
+	}
 	
 	$scope.generateCode = function() {
 		console.log("generate!");

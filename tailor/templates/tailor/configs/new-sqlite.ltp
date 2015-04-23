@@ -1,0 +1,32 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+<div class="form-horizontal">
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Name</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" placeholder="myConfig" ng-model="newConfig.SQLite.name">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">File</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" placeholder="data/configuration.db" ng-model="newConfig.SQLite.file">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Table</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" placeholder="configuration" ng-model="newConfig.SQLite.table">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Encryption <input type="checkbox" ng-model="newConfig.SQLite.encryption"></label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" placeholder="Encryption key" ng-model="newConfig.SQLite.encryptionKey" ng-disabled="!newConfig.SQLite.encryption">
+		</div>
+	</div>
+	<div class="form-group">
+		<button type="button" class="btn btn-success col-sm-offset-2" ng-click="configSQLiteAdd()">
+			<i class="glyphicon glyphicon-plus"></i> New config
+		</button>
+	</div>
+</div>

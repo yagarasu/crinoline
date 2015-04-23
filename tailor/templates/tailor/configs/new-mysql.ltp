@@ -1,0 +1,28 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+<div class="form-horizontal">
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Name</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" placeholder="myConfig" ng-model="newConfig.MySQL.name">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Table</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" placeholder="configurations" ng-model="newConfig.MySQL.table">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Database</label>
+		<div class="col-sm-10">
+			<select class="form-control" ng-model="newConfig.MySQL.database" ng-options="db.id as db.name for db in databases" required>
+				<option value="">- Select -</option>	
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<button type="button" class="btn btn-success col-sm-offset-2" ng-click="configMySQLAdd()">
+			<i class="glyphicon glyphicon-plus"></i> New config
+		</button>
+	</div>
+</div>

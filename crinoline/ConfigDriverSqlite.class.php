@@ -7,13 +7,13 @@
         
         protected $dbfile = "";
         protected $dbtable = "";
-        protected $encription = null;
+        protected $encryption = null;
         protected $db = null;
         
-        public function __construct($dbfile, $table, $encription=null) {
+        public function __construct($dbfile, $table, $encryption=null) {
             $this->dbfile = $dbfile;
             $this->dbtable = $table;
-            $this->encription = $encription;
+            $this->encryption = $encryption;
             $this->fetch();
         }
         
@@ -40,7 +40,7 @@
         }
         
         public function fetch() {
-            $this->db = new SQLite3($this->dbfile, SQLITE3_OPEN_READWRITE|SQLITE3_OPEN_CREATE, $this->encription);
+            $this->db = new SQLite3($this->dbfile, SQLITE3_OPEN_READWRITE|SQLITE3_OPEN_CREATE, $this->encryption);
             $this->db->exec("CREATE TABLE IF NOT EXISTS " . $this->dbtable . "(_id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT NOT NULL UNIQUE, val TEXT)");
         }
         
