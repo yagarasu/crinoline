@@ -9,11 +9,11 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">URL</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" placeholder="data/configuration.json" ng-model="newConfig.Json.url">
+			<input type="text" class="form-control" placeholder="data/configuration.json" ng-model="newConfig.Json.settings.url">
 		</div>
 	</div>
 	<div class="form-group">
-		<button type="button" class="btn btn-success col-sm-offset-2" ng-click="configJsonAdd()">
+		<button type="button" class="btn btn-success col-sm-offset-2" ng-click="configAdd('Json')">
 			<i class="glyphicon glyphicon-plus"></i> New config
 		</button>
 	</div>

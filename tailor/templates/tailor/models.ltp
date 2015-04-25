@@ -32,7 +32,7 @@
 		<div class="panel panel-default" ng-repeat="model in models">
 			<div class="panel-heading">
 				<a href="#mod-item-{{model.name}}" data-toggle="collapse"><i class="glyphicon glyphicon-eye-open"></i> {{model.name}} ({{model.type}})</a>
-				<a href="#" class="btn btn-danger btn-xs pull-right"><i class="glyphicon glyphicon-remove" ng-click="modelDelete(model.name)"></i></a>
+				<a href="#" class="btn btn-danger btn-xs pull-right" ng-click="modelDelete(model.name)"><i class="glyphicon glyphicon-remove"></i></a>
 			</div>
 			<div id="mod-item-{{model.name}}" class="collapse">
 				<div class="panel-body">

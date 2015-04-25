@@ -21,7 +21,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Database</label>
 		<div class="col-sm-10">
-			<select class="form-control" ng-model="newModel.DBDataMapCollection.settings.database" ng-options="db.id as db.name for db in databases" required>
+			<select class="form-control" ng-model="newModel.DBDataMapCollection.settings.database" ng-options="db.id as db.id for db in databases" required>
 				<option value="">- Select -</option>	
 			</select>
 		</div>

@@ -3,7 +3,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<form ng-controller="builder">
+		<div ng-controller="builder">
 			<div role="tabpanel">
 				<ul class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active"><a href="#general" data-toggle="tab">General</a></li>
@@ -32,7 +32,7 @@
 					</div>
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
 </div>
 

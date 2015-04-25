@@ -29,18 +29,18 @@
 			</div><!-- //.panelbody -->
 		</div>
 
-		<div class="panel panel-default">
+		<div class="panel panel-default" ng-repeat="config in configs">
 			<div class="panel-heading">
-				<a href="#cfg-item-ConfigMySQL" data-toggle="collapse"><i class="glyphicon glyphicon-eye-open"></i> Config (MySQL)</a>
-				<a href="#" class="btn btn-danger btn-xs pull-right"><i class="glyphicon glyphicon-remove"></i></a>
+				<a href="#cfg-item-{{config.name}}" data-toggle="collapse"><i class="glyphicon glyphicon-eye-open"></i> {{config.name}} ({{config.type}})</a>
+				<a href="#" class="btn btn-danger btn-xs pull-right" ng-click="configDelete(config.name)"><i class="glyphicon glyphicon-remove"></i></a>
 			</div>
-			<div id="cfg-item-ConfigMySQL" class="collapse">
+			<div id="cfg-item-{{config.name}}" class="collapse">
 				<div class="panel-body">
 					<dl class="dl-horizontal">
-						<dt>Assigned Table</dt>
-						<dd>contacts</dd>
-						<dt>Database</dt>
-						<dd>theMainDB</dd>
+						<div ng-repeat="(key, val) in config.settings">
+							<dt>{{key}}</dt>
+							<dd>{{val}}</dd>
+						</div>
 					</dl>
 				</div>
 			</div>

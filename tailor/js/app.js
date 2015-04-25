@@ -83,11 +83,25 @@ app.controller('builder', function($scope) {
 			name: 'crinoline'
 		}
 	];
+	$scope.databaseIdAvailable = function(id) {
+		for(var i = 0; i < $scope.databases.length; i++) {
+			if($scope.databases[i].id===id) {
+				return false;
+			}
+		}
+		return true;
+	};
 	$scope.databaseAdd = function() {
+		while(!$scope.databaseIdAvailable($scope.newDb.id)) {
+			var ver = /\d+$/.exec($scope.newDb.id);
+			var nver = parseInt(ver) + 1;
+			var root = (ver == null) ? $scope.newDb.id : $scope.newDb.id.substring(0,($scope.newDb.id.length-ver.length));
+			$scope.newDb.id = (ver != null) ? root + nver : $scope.newDb.id + '1';
+		}
 		var db = angular.copy($scope.newDb);
 		$scope.databases.push(db);
 		$scope.newDb = {};
-	}
+	};
 	$scope.databaseDelete = function(item) {
 		var i = $scope.databases.indexOf(item);
 		if(i===-1) return;
@@ -134,9 +148,23 @@ app.controller('builder', function($scope) {
 	$scope.modelHasSettings = function(model) {
 		return !angular.equals({}, model.settings);
 	};
+	$scope.modelNameIsAvailable = function(name) {
+		for(var i = 0; i < $scope.models.length; i++) {
+			if($scope.models[i].name===name) {
+				return false;
+			}
+		}
+		return true;
+	};
 	$scope.modelAdd = function(type) {
 		var t = type || 'DataMap';
-		var r = angular.copy($scope.newModel[type]);
+		while(!$scope.modelNameIsAvailable($scope.newModel[t].name)) {
+			var ver = /\d+$/.exec($scope.newModel[t].name);
+			var nver = parseInt(ver) + 1;
+			var root = (ver == null) ? $scope.newModel[t].name : $scope.newModel[t].name.substring(0,($scope.newModel[t].name.length-ver.length));
+			$scope.newModel[t].name = (ver != null) ? root + nver : $scope.newModel[t].name + '1';
+		}
+		var r = angular.copy($scope.newModel[t]);
 		r.type = t;
 		$scope.models.push(r);
 		$scope.newModel[type] = {name:'',type:'',settings:{}}
@@ -151,13 +179,50 @@ app.controller('builder', function($scope) {
 	};
 
 	$scope.configs = [
+		{
+			name: 'basicConfig',
+			type: 'MySQL',
+			settings: {
+				assignedTable: 'contacts',
+				database: 'someDb'
+			}
+		}
 	];
 	$scope.newConfig = {
-		Hardcode: {},
-		Json: {},
-		MySQL: {},
-		SQLite: {}
+		Hardcode: {name:'',type:'',settings:{}},
+		Json: {name:'',type:'',settings:{}},
+		MySQL: {name:'',type:'',settings:{}},
+		SQLite: {name:'',type:'',settings:{}}
 	}
+	$scope.configNameIsAvailable = function(name) {
+		for(var i = 0; i < $scope.configs.length; i++) {
+			if($scope.configs[i].name===name) {
+				return false;
+			}
+		}
+		return true;
+	}
+	$scope.configAdd = function(type) {
+		var t = type || 'Hardcode';
+		while(!$scope.configNameIsAvailable($scope.newConfig[t].name)) {
+			var ver = /\d+$/.exec($scope.newConfig[t].name);
+			var nver = parseInt(ver) + 1;
+			var root = (ver == null) ? $scope.newConfig[t].name : $scope.newConfig[t].name.substring(0,($scope.newConfig[t].name.length-ver.length));
+			$scope.newConfig[t].name = (ver != null) ? root + nver : $scope.newConfig[t].name + '1';
+		}
+		var r = angular.copy($scope.newConfig[type]);
+		r.type = t;
+		$scope.configs.push(r);
+		$scope.newConfig[type] = {name:'',type:'',settings:{}}
+	};
+	$scope.configDelete = function(item) {
+		for(var i = 0; i < $scope.configs.length; i++) {
+			if($scope.configs[i].name===item) {
+				$scope.configs.splice(i, 1);
+				break;
+			}
+		}
+	};
 	
 	$scope.generateCode = function() {
 		console.log("generate!");
