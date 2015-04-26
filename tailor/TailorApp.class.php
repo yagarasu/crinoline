@@ -26,6 +26,8 @@
 		private function setRoutes() {
 			$this->addRoute('ALL:/', 'HomePresenter', 'main');
 			$this->addRoute('ALL:/about/', 'HomePresenter', 'about');
+			$this->addRoute('POST:/builder/', 'HomePresenter', 'build');
+			$this->addRoute('GET:/download/', 'HomePresenter', 'download');
 		}
 
 		/**

@@ -8,7 +8,7 @@
 		</div>
 		<div class="form-group">
 			<label for="appRoot">App root</label>
-			<input type="text" class="form-control" id="appRoot" name="grl-appRoot" placeholder="http://mydomain.com/app/" ng-model="appRoot">
+			<input type="text" class="form-control" id="appPath" name="grl-appPath" placeholder="http://mydomain.com/app/" ng-model="appPath">
 			<p>App root is the absolute trailing slash path to the folder that contains the main index.</p>
 		</div>
 		<div class="row">

@@ -1,5 +1,12 @@
 var app = angular.module('tailor', []);
-app.controller('builder', function($scope) {
+app.controller('builder', ['$scope','$http', function($scope, $http) {
+	$scope.alerts = [];
+	$scope.modLock = false;
+	$scope.alertWarnings = 0;
+	$scope.consoleAdd = function(msg, type) {
+		$scope.alerts.push({'message': msg, 'type': type});
+	};
+
 	$scope.className = '';
 	$scope.appPath = '';
 	$scope.plugins = [
@@ -25,7 +32,13 @@ app.controller('builder', function($scope) {
 		}
 	];
 	$scope.getPlugins = function() {
-		return filterFilter($scope.availablePlugins, {active:true})
+		var plgs = [];
+		for(var i=0; i<$scope.plugins.length; i++) {
+			if($scope.plugins[i].active) {
+				plgs.push($scope.plugins[i]);
+			}
+		}
+		return plgs;
 	};
 
 	$scope.routes = [
@@ -44,6 +57,18 @@ app.controller('builder', function($scope) {
 	};
 	$scope.routeAdd = function() {
 		var r = angular.copy($scope.newRoute);
+		if(!/^(\/(\w+|%\w+%))*\/?$/.test(r.path)) {
+			alert('Your path is not valid. Please check before adding it.');
+			return false;
+		}
+		if(!/^[a-z]\w*$/i.test(r.presenter)) {
+			alert('Your presenter is not valid. Please check before adding it.');
+			return false;
+		}
+		if(!/^[a-z_]\w*$/i.test(r.action)) {
+			alert('Your action is not valid. Please check before adding it.');
+			return false;
+		}
 		$scope.routes.push(r);
 		$scope.newRoute.method = 'ALL';
 		$scope.newRoute.path = '';
@@ -225,6 +250,76 @@ app.controller('builder', function($scope) {
 	};
 	
 	$scope.generateCode = function() {
-		console.log("generate!");
+		$scope.alerts = [];
+		$scope.alertWarnings = 0;
+		$scope.modLock = true;
+		$scope.consoleAdd('Validating data...','info');
+		if(!$scope.validate()) {
+			$scope.consoleAdd('Validation failed. Please check this log for more details.','danger');
+			$scope.modLock = false;
+			return;
+		}
+		$scope.consoleAdd('Validation passed with '+$scope.alertWarnings+' warnings.','success');
+		$scope.consoleAdd('Sending data to produce the .zip...','info');
+		$http({
+			method: 'post',
+			url: 'builder/',
+			data: $.param({
+				'appData' : {
+					className: $scope.className,
+					appPath: $scope.appPath,
+					plugins: $scope.getPlugins(),
+					routes: $scope.routes,
+					databases: $scope.databases,
+					models: $scope.models,
+					configs: $scope.configs
+				}
+			}),
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+		}).success(function(data) {
+			console.log(data);
+		});
+		$scope.modLock = false;
 	};
-});
+
+	$scope.validate = function() {
+		if(!/^[A-Z]+[a-zA-Z0-9_]*$/.test($scope.className)) {
+			// Strict doesn't match. Try to fix
+			var cnfl = $scope.className.substr(0,1);
+			if(!/[a-z]/.test(cnfl)) {
+				$scope.consoleAdd('Class name "'+$scope.className+'" is not valid.','danger');
+				return false;
+			} else {
+				var cn = cnfl.toUpperCase() + $scope.className.substr(1);
+				$scope.className = cn;
+				$scope.consoleAdd('Class name corrected to "'+$scope.className+'".','warning');
+				$scope.alertWarnings++;
+			}
+		}
+		// Class name valid
+		if(!/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/.test($scope.appPath)) {
+			// Invalid app root
+			if(!/^https?:\/\/localhost(\:\d+)?(\/\w+)*$/.test($scope.appPath)) {
+				$scope.consoleAdd('App root path "'+$scope.appPath+'" is not valid.','danger');
+				return false;
+			} else {
+				$scope.consoleAdd('App root path "'+$scope.appPath+'" is at localhost. Please take that into account when deploying.','warning');
+				$scope.alertWarnings++;
+			}
+		}
+		// App path valid
+		var plugs = $scope.getPlugins();
+		for(var i=0; i<plugs.length; i++) {
+			console.log(plugs[i].config);
+			if(plugs[i].config!=''&&!/^array\(/.test(plugs[i].config)) {
+				$scope.consoleAdd('Configs for plugin "'+plugs[i].name+'" does not start with "array(".','danger');
+				return false;
+			}
+			if(plugs[i].config!=''&&!/\);$/.test(plugs[i].config)) {
+				$scope.consoleAdd('Configs for plugin "'+plugs[i].name+'" does not end with ");".','danger');
+				return false;
+			}
+		}
+		return true;
+	};
+}]);
