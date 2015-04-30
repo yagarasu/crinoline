@@ -18,6 +18,9 @@
             foreach($plugins as $p) {
                 $this->loadSinglePlugin($p);
             }
+            foreach($this->plugins as $p) {
+                $this->coupleWithAll($p);
+            }
         }
 
         /**
@@ -57,6 +60,21 @@
                     // Bubble all plugin events to main app
                     $app->triggerEvent($args['event'], $args);
                 });
+            }
+        }
+        
+        /**
+         * After initiating all plugins, everyone must couple with the others.
+         */
+        private function coupleWithAll(&$plugin) {
+            $plugins = array_filter($this->plugins, function($plg) use (&$plugin) {
+                $pInfo1 = $plugin->getInfo();
+                $pInfo2 = $plg->getInfo();
+                if($pInfo1['className']===$pInfo2['className']) return false;
+                return true;
+            });
+            foreach($plugins as $p) {
+                $plugin->coupleWith($p);
             }
         }
         

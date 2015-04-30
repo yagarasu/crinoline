@@ -167,7 +167,7 @@
 		 * @return array Raw array of data
 		 */
 		public function allData() {
-			return $_SESSION[$this->sessionName]['data'];
+			return isset($_SESSION[$this->sessionName]['data']) ? $_SESSION[$this->sessionName]['data'] : array();
 		}
 		
 	 }

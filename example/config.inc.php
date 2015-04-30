@@ -23,7 +23,7 @@
 
     // App root
     // This is the absolute root of the Crinoline instalation. Use trailing slash.
-    $config['appRoot'] = 'http://localhost/crinoline/example/';
+    $config['appRoot'] = 'http://crinoline-alexyshegmann.c9.io/crinoline/example/';
     // $config['appRoot'] = 'http://crinoline-alexyshegmann.c9.io/crinoline/example/';
     
     // Alternative directories

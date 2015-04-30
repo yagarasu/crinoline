@@ -34,9 +34,6 @@
 
             // Load soft configurations
             $this->softconf = new ConfigDriverSqlite( 'softconf.db' , 'global' );
-
-            // Handle the request
-            $this->handleRequest();
         }
 
         /**
@@ -96,17 +93,6 @@
          * @param  array $args Event array
          */
         public function hnd_parse($args) {
-            // Set the user variable in the context
-            //plg('CRLaces')->setIntoContext('$user', plg('CRSession')->getData('user', array(
-            //    'name' => 'Unknown',
-            //    'email' => 'Unknown',
-            //)));
-            // Add the role variable to the user
-            //plg('CRLaces')->setIntoContext('$user:role', plg('CRRoles')->userIs());
-            
-            plg('CRSession')->coupleWith(plg('CRLaces'));
-            plg('CRRoles')->coupleWith(plg('CRLaces'));
-            
             // Handle the ALERTS hook to show the alerts with a template
             plg('CRLaces')->registerHookInContext('ALERTS', function($input, $attrs) {
                 $alerts = plg('CRAlerts')->getAlerts();

@@ -31,5 +31,14 @@
 	
 	// Init
 	$app->init();
+	
+	try {
+		// Handle request
+		$app->handleRequest();
+	} catch(Exception $e) {
+		$app->triggerEvent('REQUESTERROR', array(
+			'exception' => $e
+		));
+	}
 
 ?>
