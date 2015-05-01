@@ -29,7 +29,6 @@
                 relocate(approot());
             }
 
-            //plg('CRLaces')->loadAndRender('templates/header.ltp');
             plg('CRLaces')->loadAndRender('templates/contacts-edit.ltp');
         }
 

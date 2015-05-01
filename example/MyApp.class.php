@@ -15,18 +15,11 @@
         public function init() {
             
             $this->dbData = array(
-                'host'  => getenv('IP'),
-                'user'  => getenv('C9_USER'),
-                'pass'  => '',
-                'name'  => 'crinolineEx',
-            );
-
-            /*$this->dbData = array(
                 'host'  => 'localhost',
                 'user'  => 'root',
                 'pass'  => 'root',
                 'name'  => 'cr-example',
-            );*/
+            );
 
             $this->setRoutes();
             $this->bindEvents();  

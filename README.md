@@ -1,15 +1,11 @@
-![Crinoline Framework](https://raw.githubusercontent.com/yagarasu/crinoline/master/Branding/Logo.jpg "Logo")
-
 # Current version
-Current version is **1.0.0.RC**. About to be shipped.
+Current version is **1.0.0**. Ready!
 
 # What's Crinoline
 
 ## *Structure underneath those garmets*
 
 Crinoline is a PHP MVP (Model View Presenter) Framework for quick and easy webapp deployment. The main objective is to provide a well planned structure (thus, the name) for the developer. You can focus on the business logic, the models and the views, but all the routing, the session management, the database handling and query construction is already there for you to use whenever you want.
-
-Crinoline comes with an automated installation constructor (the 'tailor'). With a nice and simple GUI you can set up the base for your app, then get the code, implement in your dev server and start coding. All base files and structures will be there waiting for you to fill in the blanks.
 
 # How to use
 
@@ -30,9 +26,8 @@ In your root path you will find the `config.inc.php` file.  This is where you de
 
 Please note that `$config['altDirs']` contains an array of directories to look for the different classes and it's not recursive, so you must add all your tree.
 
-One thing that must be clarified here is the use of plugins. This setting is inside the config file. If you used the Tailor to build your installation, this part is already set up.
-
-Plugins are set up in an array of arrays assigned to `$config['plugins']`. Each array contains information on how to instantiate the plugin and a small configuration.
+## Plugins
+Plugins are set up in an array of arrays assigned to `$config['plugins']` inside `config.inc.php`. Each array contains information on how to instantiate the plugin and a small configuration.
 
 Eg:
 
@@ -50,6 +45,21 @@ This would activate the CRSession core plugin taken from `CRINOLINE_CORE/plugins
 
 Every plugin has its own parameters so check the plugin documentation for more details.
 
+Inside the code, you can access the plugin with a shorthand code:
+
+	plg('PluginName')->pluginMethods();
+
+For example, you can use the CRSession core plugin like this after your authentication process to grant access to a user:
+
+	plg('CRSession')->grantKey();
+	plg('CRSession')->setData('user', 'foo');
+
+And check his credentials with:
+
+	if(!plg('CRSession')->hasKey()) relocate(approot());
+
+If CRSession hasn't granted a key to the user, it would relocate the request to the app root.
+
 ## App class
 The App class binds everything together and gives to the bootstrap an entry point. This is named by you and it sits in the root of the application.
 
@@ -57,12 +67,11 @@ The App class binds everything together and gives to the bootstrap an entry poin
         ...
     }
 
-Your App class must extend from `App` and have an `init()` public method. Here you will set everything up to handle the request and call `handleRequest()` to let the Router take control.
+Your App class must extend from `App` and have an `init()` public method. Here you will set everything up to handle the request. After this, the Router will take control again.
 
     class MyApp extends App {
         public function init() {
 	        ... do some init ...
-            $this->handleRequest();
         }
     }
 
@@ -232,7 +241,7 @@ Eg:
 ## View
 This layer represents the Laces templates. You can use pure PHP templates here with includes, but Crinoline provides a plugin for Laces.
 
-You can read the documentation for Laces *here*.
+You can read the documentation for Laces [here](https://github.com/yagarasu/laces/).
 
 The plugin must be set in the config file and it is available with the following construction: `plg('CRLaces')`.
 
