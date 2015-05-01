@@ -1,14 +1,9 @@
 # Current version
 Current version is **1.0.0**. Ready!
 
-<<<<<<< HEAD
-## Current version
-The current version is **0.1.1**. Not recommended for production sites.
-=======
 # What's Crinoline
 
 ## *Structure underneath those garmets*
->>>>>>> dev
 
 Crinoline is a PHP MVP (Model View Presenter) Framework for quick and easy webapp deployment. The main objective is to provide a well planned structure (thus, the name) for the developer. You can focus on the business logic, the models and the views, but all the routing, the session management, the database handling and query construction is already there for you to use whenever you want.
 
@@ -38,12 +33,12 @@ Eg:
 
 	$config['plugins'] = array(
 		array(
-            'className' => 'CRSession',
-            'path'      => CRINOLINE_CORE . 'plugins/CRSession/',
-            'params'    => array(
-                'sessionName' => 'CrinolineExample'
-            ),
-        ),
+            		'className' => 'CRSession',
+            		'path'      => CRINOLINE_CORE . 'plugins/CRSession/',
+        		 'params'    => array(
+        			 'sessionName' => 'CrinolineExample'
+        		 ),
+		),
 	);
 
 This would activate the CRSession core plugin taken from `CRINOLINE_CORE/plugins/CRSession` and instruct it to use  "CrinolineExample" as the session name.
