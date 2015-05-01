@@ -1,8 +1,0 @@
-~{view src="templates/header.crml"}~
-	
-	<div>
-		<h2>Ooops!</h2>
-		<p>Route '~{$error:route}~' not found.</p>
-	</div>
-
-~{view src="templates/footer.crml"}~

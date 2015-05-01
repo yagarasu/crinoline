@@ -1,0 +1,29 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+~{ include src="templates/header.ltp" }~
+
+<div class="row">
+	<div class="col-md-12">
+		<h1>User: ~{{ $_SESSION:user:name }}~</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8">
+		<h2>User details</h2>
+		<dl class="dl-horizontal">
+			<dt>Name:</dt>
+			<dd>~{{ $_SESSION:user:name }}~</dd>
+			<dt>Role:</dt>
+			<dd>~{{ $_ROLE }}~</dd>
+			<dt>Email:</dt>
+			<dd>~{{ $_SESSION:user:email }}~</dd>
+		</dl>
+	</div>
+	<div class="col-md-4">
+		<div class="well">
+			<p>Here you can see an example of a restricted user area. Only logged users can see this screen.</p>
+			<p>Of course, if you don't protect your .ltp files well enough with propper server settings, anyone can look at your templates.</p>
+		</div>
+	</div>
+</div>
+
+~{ include src="templates/footer.ltp" }~

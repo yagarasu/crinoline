@@ -1,0 +1,44 @@
+{{{ LacesTemplate language="en" author="Alexys Hegmann" }}}
+~{ include src="templates/header.ltp" }~
+
+<div class="row">
+	<div class="col-md-12">
+		<h1>Contacts</h1>
+		<p class="lead">CRUD operations example.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8">
+		<h2>New contact <a href="~{{$_ROOT}}~contacts/" class="btn btn-danger pull-right">Cancel</a></h2>
+		<form class="form-horizontal" method="post" action="#">
+			<div class="form-group">
+				<label for="name" class="col-sm-2 control-label">Name</label>
+				<div class="col-sm-10">
+					<input type="text" id="name" name="name" class="form-control" placeholder="Name" ~{ if [$contact exists] }value="~{{$contact:name | attr}}~"{ if }~>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="email" class="col-sm-2 control-label">E-mail</label>
+				<div class="col-sm-10">
+					<input type="email" id="email" name="email" class="form-control" placeholder="E-mail" ~{ if [$contact exists] }value="~{{$contact:email | attr}}~"{ if }~>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="phone" class="col-sm-2 control-label">Phone</label>
+				<div class="col-sm-10">
+					<input type="text" id="phone" name="phone" class="form-control" placeholder="Phone" ~{ if [$contact exists] }value="~{{$contact:phone | attr}}~"{ if }~>
+				</div>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary" type="submit">Ok</button>
+			</div>
+		</form>
+	</div>
+	<div class="col-md-4">
+		<div class="well">
+			<p>Here you can edit or create a new row in the Database with the DBDataMap. It automatically knows when to use INSERT or UPDATE.</p>
+		</div>
+	</div>
+</div>
+
+~{ include src="templates/footer.ltp" }~

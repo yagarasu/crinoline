@@ -1,0 +1,11 @@
+#----- Apache options -----
+	Allow from All
+	Require all granted
+	Options FollowSymLinks
+	Options -Indexes -Multiviews
+#---------------------------
+
+# Hide Laces Templates
+<FilesMatch "\.ltp$">
+	Deny from all
+</FilesMatch>
