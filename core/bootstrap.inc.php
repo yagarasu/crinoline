@@ -34,17 +34,11 @@ require(ABS_PATH . '/core/templating.inc.php');
 //   gracefully any exception.
 try {
 
-	/*// Require modules system
+	// Require modules system
 	hook_invoke('modules_load');
 	require(ABS_PATH . '/core/modules.inc.php');
 	modules_load();
 	hook_invoke('modules_loaded', $_modules);
-
-	// Require plugins system
-	hook_invoke('plugins_load');
-	require(ABS_PATH . '/core/plugins.inc.php');
-	plugins_load();
-	hook_invoke('plugins_loaded');*/
 	
 	// Start theme
 	hook_invoke('theme_load');
