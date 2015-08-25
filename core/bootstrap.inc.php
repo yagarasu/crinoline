@@ -38,7 +38,7 @@ try {
 	hook_invoke('modules_load');
 	require(ABS_PATH . '/core/modules.inc.php');
 	modules_load();
-	hook_invoke('modules_loaded', $_modules);
+	hook_invoke('modules_loaded');
 	
 	// Start theme
 	hook_invoke('theme_load');

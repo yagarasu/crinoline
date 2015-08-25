@@ -11,4 +11,10 @@ function Anne_info() {
 	return $info;
 }
 
+function Anne_tpl_alerts() {
+	return array(
+		'alerts' => Alerts::get()
+	);
+}
+
 ?>

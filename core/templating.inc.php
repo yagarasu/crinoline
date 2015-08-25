@@ -89,6 +89,7 @@ function template_load($template, $variables=array()) {
 			'template' => $template,
 			'variables' => $variables
 		));
+		template_name_set($template);
 		include($templateFile);
 		hook_invoke('template_loaded', array(
 			'template' => $template,

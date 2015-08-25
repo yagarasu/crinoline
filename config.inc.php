@@ -23,4 +23,11 @@ $conf['database'] = array(
 	)
 );
 
+$conf['modules_registry'] = array(
+	'class' => 'SQLite3ModulesRegistry',
+	'args' => array(
+		'filename' => 'modules/registry.db'
+	)
+);
+
 ?>

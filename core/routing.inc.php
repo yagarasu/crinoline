@@ -19,7 +19,7 @@ function routing_enroute() {
 		'route' => $r_url,
 		'result' => $res
 	));
-	if(!$res) {
+	if (!$res) {
 		hook_invoke('router_notfound', array(
 			'route' => $r_url
 		));
