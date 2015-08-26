@@ -22,7 +22,7 @@
 		 * 
 		 * @param $sessionName Name for this session
 		 */
-		public function __construct( $sessionName = "Huellas" ) {
+		public function __construct( $sessionName = "Crinoline" ) {
 			if (session_status() == PHP_SESSION_NONE) {
 				ini_set('session.gc_maxlifetime', $this->sessionExpire);
 				session_set_cookie_params($this->sessionExpire);
