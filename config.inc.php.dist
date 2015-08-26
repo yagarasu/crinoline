@@ -1,0 +1,33 @@
+<?php
+/**
+ * @file
+ *
+ * Configuration file
+ */
+
+$conf['env'] = 'DEV';
+
+$conf['server_signature'] = '[*SERVER_SIGNATURE*]';
+
+$conf['modules_dir'] = 'modules';
+$conf['themes_dir'] = 'themes';
+
+$conf['theme_name'] = 'Anne';
+
+$conf['database'] = array(
+	'default' => array(
+		'host' => '[*DB_HOST*]',
+		'name' => '[*DB_NAME*]',
+		'user' => '[*DB_USER*]',
+		'pass' => '[*DB_PASS*]'
+	)
+);
+
+$conf['modules_registry'] = array(
+	'class' => 'SQLite3ModulesRegistry',
+	'args' => array(
+		'filename' => 'modules/registry.db'
+	)
+);
+
+?>

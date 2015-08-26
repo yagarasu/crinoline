@@ -1,0 +1,5 @@
+# Logs
+*.log
+
+# Env dependant configs
+config.inc.php
