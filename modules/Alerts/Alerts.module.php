@@ -27,12 +27,14 @@ class Alerts implements IModule {
 			);
 			if (!in_array($a, $alerts))	$alerts[] = $a;
 		}
+		hook_invoke('Alerts_alerts_add', $type, $message);
 		$session->setData('alerts', $alerts);
 	}
 
 	static public function get() {
 		$session = new Session();
 		$alerts = $session->getData('alerts', array());
+		hook_invoke('Alerts_alerts_get', $alerts);
 		$session->setData('alerts', array());
 		return $alerts;
 	}

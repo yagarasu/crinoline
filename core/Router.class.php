@@ -1,4 +1,7 @@
 <?php
+/**
+ * Static class router
+ */
 class Router {
 	// Setted routes
 	static private $routes = array();

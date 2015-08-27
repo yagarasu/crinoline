@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * Module registry interface
  */
 interface IModuleRegistry {
