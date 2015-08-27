@@ -5,7 +5,7 @@
  * @version 2.2.0
  * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
  **/
-class Database implements IDatabaseDriver{
+class MySQLDriver implements IDatabaseDriver{
 	 
 	private $host = "";
 	private $user = "";

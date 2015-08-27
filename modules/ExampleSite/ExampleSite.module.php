@@ -13,6 +13,7 @@ class ExampleSite implements IModule {
 	static public function init() {
 		// Register autoload dir.
 		autoloader_register_dir(modules_getBasePath('ExampleSite') . '/presenters');
+		autoloader_register_dir(modules_getBasePath('ExampleSite') . '/models');
 
 		// Routes
 		Router::route_bind('ALL:/', 'ExampleSite_MainPresenter::home');
