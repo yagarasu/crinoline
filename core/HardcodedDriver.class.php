@@ -5,6 +5,7 @@
 class HardcodedDriver implements IDatabaseDriver {
 
 	private $data = array();
+	private $staging = array();
 
 	public function __construct($data = array()) {
 		$this->data = $data;
@@ -43,6 +44,19 @@ class HardcodedDriver implements IDatabaseDriver {
 	 * @return TRUE on success FALSE on error
 	 */
 	public function commit() {
+		if (isset($this->staging['__delete']) && count($this->staging['__delete']) > 0) {
+			$del = $this->staging['__delete'];
+			$delIndexes = array_filter($this->data, function($idx, $row) use($del) {
+				foreach ($del as $sRows) {
+					if ($row === $sRows) return TRUE;
+				}
+				// @ TODO : Not working
+				return FALSE;
+			}, ARRAY_FILTER_USE_BOTH);
+			
+		}
+		$this->data = array_merge_recursive($this->data, $this->staging);
+		$this->staging = array();
 		return true;
 	}
 	
@@ -52,54 +66,8 @@ class HardcodedDriver implements IDatabaseDriver {
 	 * @return TRUE on success FALSE on error
 	 */
 	public function rollback() {
+		$this->staging = array();
 		return true;
-	}
-	
-	/**
-	 * Sanitizes a string to be used at queries
-	 * 
-	 * @param $string String to be sanitized
-	 * @return Sanitized string of FALSE on error
-	 */
-	public function escape($string) {
-		return $string
-	}
-
-	/**
-	 * Escapes recursively a string or an array of strings (even multidimensional)
-	 * @param  mixed $subject A string or an array
-	 * @return mixed          The escaped string or the array of strings escaped
-	 */
-	public function escapeAll($subject) {
-		if(is_array($subject)) {
-			$retVal = array();
-			foreach ($subject as $key => $value) {
-				$retVal[$key] = $this->escapeAll($value);
-			}
-			return $retVal;
-		} else {
-			return $subject
-		}
-	}
-
-	/**
-	 * Executes a Query
-	 * 
-	 * @param $query Query to be executed
-	 * @return Query result as a resource
-	 */
-	public function query($query) {
-
-	}
-	
-	/**
-	 * Fetches the first element of a query
-	 * 
-	 * @param $query Query to be executed
-	 * @return First element from the results
-	 */
-	public function queryFirst($query) {
-		
 	}
 
 	/**
@@ -107,38 +75,52 @@ class HardcodedDriver implements IDatabaseDriver {
 	 * @param  string $table      Table to query
 	 * @param  string $id         Identifier of the row
 	 * @param  string $primaryKey Name of the primary key
-	 * @param  mixed $fields     Fields to retrieve. If array provided, it will be imploded.
+	 * @param  mixed $fields     Fields to retrieve. Comma separated list or array.
 	 * @return mixed             The first element from results
 	 */
-	public function getSingleById($table, $id, $primaryKey='id', $fields='*');
-	
-	/**
-	 * Fetches all elements from a query to an array
-	 * 
-	 * @param $query Query to be executed
-	 * @return An array containing the elements of the result
-	 */
-	public function fetchAll($query);
+	public function getSingleById($table, $id, $primaryKey='id', $fields='*') {
+		if (!isset($this->data[$table]))
+			throw new Exception('Table "' . $table . '" does not exist');
+		$el = NULL;
+		foreach ($this->data[$table] as $idx => $e) {
+			if (isset($e[$primaryKey]) && $e[$primaryKey] === $id) {
+				$el = $e;
+				break;
+			}
+		}
+		if ($el === NULL) return NULL;
+		$aflds = $this->parseFields($fields);
+		if ($aflds === '*') return $el;
+		$ret = array();
+		foreach ($aflds as $f) {
+			if (isset($el[$f]))
+				$ret[$f] = $el[$f];
+		}
+		return $ret;
+	}
 
 	/**
 	 * Constructs a simple select query and returns the results
 	 * @param  string $table  Table to retrieve the data from
 	 * @param  mixed $fields Fields to retrieve. If array providen, elements will be imploded.
-	 * @param  string $where  Where clause to limit the select. If null given, no WHERE will be added
+	 * @param  array $where  Where clause to limit the select. If null given, no WHERE will be added
 	 * @return array         The result of executing the query
 	 */
-	public function select($table, $fields="*", $where=null);
-	
-	/**
-	 * Counts the elements of a query
-	 * 
-	 * @param $table The table name
-	 * @param $where Where statement
-	 * @param $unique Unique elements to be counted
-	 * 
-	 * @return the count
-	 */
-	public function countRows($table, $where = "", $unique = "");
+	public function select($table, $fields="*", $where=null) {
+		if (!isset($this->data[$table]))
+			throw new Exception('Table "' . $table . '" does not exist');
+		$rows = $this->filterWhere($this->data[$table], $where);
+		$aflds = $this->parseFields($fields);
+		if ($aflds === '*') return $rows;
+		$ret = array();
+		foreach ($rows as $idx => $row) {
+			foreach ($aflds as $f) {
+				if (isset($row[$f]))
+					$ret[$idx][$f] = $row[$f];
+			}
+		}
+		return $ret;
+	}
 	
 	/**
 	 * Inserts an element into a table
@@ -148,7 +130,9 @@ class HardcodedDriver implements IDatabaseDriver {
 	 * 
 	 * @return FALSE on error, last inserted id on success
 	 */
-	public function insert($table, $data);
+	public function insert($table, $data) {
+		$this->staging[$table][] = $data;
+	}
 	
 	/**
 	 * Executes a delete query
@@ -158,7 +142,15 @@ class HardcodedDriver implements IDatabaseDriver {
 	 * 
 	 * @return TRUE on success FALSE on error
 	 */
-	public function delete($table, $where);
+	public function delete($table, $where) {
+		if (!isset($this->data[$table]))
+			throw new Exception('Table "' . $table . '" does not exist');
+		$rows = $this->filterWhere($this->data[$table], $where);
+		foreach ($rows as $row) {
+			$this->staging['__delete'][] = $row;
+		}
+		return TRUE;
+	}
 	
 	/**
 	 * Updates a table
@@ -169,6 +161,48 @@ class HardcodedDriver implements IDatabaseDriver {
 	 * 
 	 * @return TRUE on success FALSE on error
 	 */
-	public function update($table, $data, $where);
+	public function update($table, $data, $where) {
+		// @todo How to implement the commit and rollback?
+	}
+	
+	/**
+	 * Parse a comma separated list and override if array given.
+	 * 
+	 * @param mixed $list Array or string with comma separated list.
+	 * @return array The list of fields
+	 */
+	private function parseFields($fields) {
+		if ($fields === '*') return '*';
+		if (is_array($fields)) {
+			$aflds = $fields;
+		} else {
+			$flds = str_replace(' ', '', $fields);
+			if (preg_match('#[a-zA-Z0-9_]+(?=,[a-zA-Z0-9_])*#', $flds) !== 1)
+				throw new Exception('Parse error. Field list must be a comma separated list.');
+			$aflds = explode(',', $flds);
+		}
+		return $aflds;
+	}
+	
+	/**
+	 * Filters an array using a where statement
+	 * 
+	 * @param array $rows
+	 *   Rows to be filtered
+	 * @param array $where
+	 *   An array where statement
+	 * @return array
+	 *   Filtered rows
+	 */
+	private function filterWhere($rows, $where) {
+		if (!is_array($where))
+			throw new Exception('$where must be an array');
+		return array_filter($rows, function($row) use ($where) {
+			foreach ($where as $key => $val) {
+				if (!isset($row[$key]) || $row[$key] !== $val) return FALSE;
+			}
+			return TRUE;
+		});
+	}
 }
 ?>

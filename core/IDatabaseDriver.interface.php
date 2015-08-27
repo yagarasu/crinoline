@@ -37,37 +37,6 @@ interface IDatabaseDriver {
 	 * @return TRUE on success FALSE on error
 	 */
 	public function rollback();
-	
-	/**
-	 * Sanitizes a string to be used at queries
-	 * 
-	 * @param $string String to be sanitized
-	 * @return Sanitized string of FALSE on error
-	 */
-	public function escape($string);
-
-	/**
-	 * Escapes recursively a string or an array of strings (even multidimensional)
-	 * @param  mixed $subject A string or an array
-	 * @return mixed          The escaped string or the array of strings escaped
-	 */
-	public function escapeAll($subject);
-
-	/**
-	 * Executes a Query
-	 * 
-	 * @param $query Query to be executed
-	 * @return Query result as a resource
-	 */
-	public function query($query);
-	
-	/**
-	 * Fetches the first element of a query
-	 * 
-	 * @param $query Query to be executed
-	 * @return First element from the results
-	 */
-	public function queryFirst($query);
 
 	/**
 	 * Constructs a simple query to fetch a single element by id
@@ -78,14 +47,6 @@ interface IDatabaseDriver {
 	 * @return mixed             The first element from results
 	 */
 	public function getSingleById($table, $id, $primaryKey='id', $fields='*');
-	
-	/**
-	 * Fetches all elements from a query to an array
-	 * 
-	 * @param $query Query to be executed
-	 * @return An array containing the elements of the result
-	 */
-	public function fetchAll($query);
 
 	/**
 	 * Constructs a simple select query and returns the results
@@ -94,18 +55,7 @@ interface IDatabaseDriver {
 	 * @param  string $where  Where clause to limit the select. If null given, no WHERE will be added
 	 * @return array         The result of executing the query
 	 */
-	public function select($table, $fields="*", $where=null);
-	
-	/**
-	 * Counts the elements of a query
-	 * 
-	 * @param $table The table name
-	 * @param $where Where statement
-	 * @param $unique Unique elements to be counted
-	 * 
-	 * @return the count
-	 */
-	public function countRows($table, $where = "", $unique = "");
+	public function select($table, $fields="*", $where=NULL);
 	
 	/**
 	 * Inserts an element into a table
