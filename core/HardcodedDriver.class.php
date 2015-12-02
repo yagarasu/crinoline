@@ -5,7 +5,6 @@
 class HardcodedDriver implements IDatabaseDriver {
 
 	private $data = array();
-	private $staging = array();
 
 	public function __construct($data = array()) {
 		$this->data = $data;
@@ -44,19 +43,6 @@ class HardcodedDriver implements IDatabaseDriver {
 	 * @return TRUE on success FALSE on error
 	 */
 	public function commit() {
-		if (isset($this->staging['__delete']) && count($this->staging['__delete']) > 0) {
-			$del = $this->staging['__delete'];
-			$delIndexes = array_filter($this->data, function($idx, $row) use($del) {
-				foreach ($del as $sRows) {
-					if ($row === $sRows) return TRUE;
-				}
-				// @ TODO : Not working
-				return FALSE;
-			}, ARRAY_FILTER_USE_BOTH);
-			
-		}
-		$this->data = array_merge_recursive($this->data, $this->staging);
-		$this->staging = array();
 		return true;
 	}
 	
@@ -66,7 +52,6 @@ class HardcodedDriver implements IDatabaseDriver {
 	 * @return TRUE on success FALSE on error
 	 */
 	public function rollback() {
-		$this->staging = array();
 		return true;
 	}
 
@@ -109,7 +94,7 @@ class HardcodedDriver implements IDatabaseDriver {
 	public function select($table, $fields="*", $where=null) {
 		if (!isset($this->data[$table]))
 			throw new Exception('Table "' . $table . '" does not exist');
-		$rows = $this->filterWhere($this->data[$table], $where);
+		$rows = ($where !== null) ? $this->filterWhere($this->data[$table], $where) : $this->data[$table];
 		$aflds = $this->parseFields($fields);
 		if ($aflds === '*') return $rows;
 		$ret = array();
@@ -131,7 +116,7 @@ class HardcodedDriver implements IDatabaseDriver {
 	 * @return FALSE on error, last inserted id on success
 	 */
 	public function insert($table, $data) {
-		$this->staging[$table][] = $data;
+		$this->data[$table][] = $data;
 	}
 	
 	/**
@@ -147,7 +132,8 @@ class HardcodedDriver implements IDatabaseDriver {
 			throw new Exception('Table "' . $table . '" does not exist');
 		$rows = $this->filterWhere($this->data[$table], $where);
 		foreach ($rows as $row) {
-			$this->staging['__delete'][] = $row;
+			$idx = array_search($row, $this->data[$table]);
+			unset($this->data[$table][$idx]);
 		}
 		return TRUE;
 	}

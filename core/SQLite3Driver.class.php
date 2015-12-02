@@ -1,14 +1,12 @@
 <?php
 /**
- * MySQL Database Driver
+ * SQLite3 Database Driver
  * 
- * @version 2.2.0
+ * @version 1.0.0
  * @author Alexys Hegmann "Yagarasu" http://alexyshegmann.com
  **/
-class MySQLDriver implements IDatabaseDriver {
+class SQLite3Driver extends SQLite3 implements IDatabaseDriver {
 	 
-	private $host = "";
-	private $user = "";
 	private $pass = "";
 	private $db   = "";
 	 
@@ -19,14 +17,10 @@ class MySQLDriver implements IDatabaseDriver {
 	/**
 	 * Constructor
 	 * 
-	 * @param $host Host for the database
-	 * @param $user User for the database
-	 * @param $pass Password for the database
 	 * @param $db Database schema to use
+	 * @param $pass Password for the database
 	 */
-	public function __construct($host, $user, $pass, $db) {
-		$this->host = $host;
-		$this->user = $user;
+	public function __construct($db, $pass) {
 		$this->pass = $pass;
 		$this->db = $db;
 	}
@@ -37,11 +31,7 @@ class MySQLDriver implements IDatabaseDriver {
 	 * @return TRUE on success FALSE on error
 	 */
 	public function connect() {
-		$this->dblink = new mysqli($this->host, $this->user, $this->pass, $this->db);
-		if($this->dblink->connect_error) {
-			return false;
-		}
-		$this->dblink->autocommit(FALSE);
+		$this->open($this->db);
 		$this->isConn = true;
 		return true;
 	}
@@ -53,19 +43,19 @@ class MySQLDriver implements IDatabaseDriver {
 	 */
 	public function close() {
 		if(!$this->isConn) { return false; } else {
-			$this->dblink->close();
-			$this->dblink = null;
-			return true;
+			$c = $this->close();
+			$this->isConn = !$c;
+			return $c;
 		}
 	}
 	
 	/**
-	 * Returns the last error produced by mysql
+	 * Returns the last error produced by SQLite3
 	 * 
 	 * @return Last error
 	 */
 	public function getLastError() {
-		return $this->dblink->error;
+		return $this->lastErrorMsg();
 	}
 	
 	/**
@@ -83,9 +73,7 @@ class MySQLDriver implements IDatabaseDriver {
 	 * @return TRUE on success FALSE on error
 	 */
 	public function commit() {
-		if(!$this->isConn) { return false; } else {
-			return $this->dblink->commit();
-		}
+		return true;
 	}
 	
 	/**
@@ -94,9 +82,7 @@ class MySQLDriver implements IDatabaseDriver {
 	 * @return TRUE on success FALSE on error
 	 */
 	public function rollback() {
-		if(!$this->isConn) { return false; } else {
-			return $this->dblink->rollback();
-		}
+		return true;
 	}
 	
 	/**
@@ -107,7 +93,7 @@ class MySQLDriver implements IDatabaseDriver {
 	 */
 	public function escape($string) {
 		if(!$this->isConn) { return false; } else {
-			return $this->dblink->real_escape_string($string);
+			return $this->escapeString($string);
 		}
 	}
 
@@ -140,7 +126,7 @@ class MySQLDriver implements IDatabaseDriver {
 	 */
 	public function query($query) {
 		if(!$this->isConn) { return false; } else {
-			$res = $this->dblink->query($query);
+			$res = $this->query($query);
 			return $res;
 		}
 	}
@@ -153,16 +139,13 @@ class MySQLDriver implements IDatabaseDriver {
 	 */
 	public function queryFirst($query) {
 		if(!$this->isConn) { return false; } else {
-			$res = $this->dblink->query($query);
+			$res = $this->querySingle($query, true);
 			if($res === false) {
 				return false;
 			} else {
-				if($res->num_rows===0) {
+				if(count($res) === 0) {
 					return false;
 				} else {
-					$ret = $res->fetch_assoc();
-					$res->free();
-					$ret = $this->recursiveUTF8($ret);
 					return $ret;
 				}
 			}
@@ -195,15 +178,15 @@ class MySQLDriver implements IDatabaseDriver {
 	 */
 	public function fetchAll($query) {
 		if(!$this->isConn) { return false; } else {
-			$res = $this->dblink->query($query);
+			$res = $this->query($query);
 			if($res === false) {
 				return false;
 			} else {
 				$arrElements = array();
-				while($el = $res->fetch_assoc()) {
+				while($el = $res->fetchArray()) {
 					array_push($arrElements, $el);
 				}
-				$res->free();
+				$res->finalize();
 				$arrElements = $this->recursiveUTF8($arrElements);
 				return $arrElements;
 			}
@@ -220,7 +203,7 @@ class MySQLDriver implements IDatabaseDriver {
 	public function select($table, $fields="*", $where=null)
 	{
 		$fields = (is_array($fields)) ? implode(" , ", $fields) : $fields;
-		$where = ($where!==null) ? " WHERE ".$where.";" : ";";
+		$where = ($where !== null) ? " WHERE ".$where.";" : ";";
 		$q = "SELECT ".$fields." FROM ".$table.$where;
 		return $this->fetchAll($q);
 	}
@@ -236,18 +219,14 @@ class MySQLDriver implements IDatabaseDriver {
 	 */
 	public function countRows($table, $where = "", $unique = "") {
 		if(!$this->isConn) { return false; } else {
-			$unique = $this->escape($unique);
-			$table = $this->escape($table);
-			$cnt = ($unique == "") ? "count(*) as cnt" : "count(distinct ".$unique.") as cnt";
-			$whe = ($where == "") ? "1=1" : $where;
-			$query = "SELECT ".$cnt." FROM ".$table." WHERE ".$whe.";";
-			$res = $this->dblink->query($query);
-			if($res===false) {
+			$cnt = ($unique === "") ? "count(*) as cnt" : "count(distinct ".$unique.") as cnt";
+			$whe = ($where === "") ? '' : ' WHERE ' . $where;
+			$query = "SELECT ".$cnt." FROM ".$table.$whe.";";
+			$res = $this->querySingle($query);
+			if($res===false || $res === null) {
 				return false;
 			} else {
-				$r = $res->fetch_assoc();
-				$res->free();
-				return intval($r['cnt']);
+				return intval($res);
 			}
 		}
 	}
@@ -262,7 +241,6 @@ class MySQLDriver implements IDatabaseDriver {
 	 */
 	public function insert($table, $data) {
 		if(!$this->isConn) { return false; } else {
-			$table = $this->escape($table);
 			$keys = array_keys($data);
 			$keys = array_map(array($this, 'escape'), $keys);
 			$qkeys = implode(", ", $keys);
@@ -277,11 +255,11 @@ class MySQLDriver implements IDatabaseDriver {
 			}
 			$qval = implode(", ", $data);
 			$query = "INSERT INTO {$table} ({$qkeys}) VALUES ({$qval});";
-			$res = $this->dblink->query($query);
-			if($res == false) {
+			$res = $this->query($query);
+			if($res === false) {
 				return false;
 			} else {
-				$lastid = $this->dblink->insert_id;
+				$lastid = $this->lastInsertRowID();
 				return $lastid;
 			}
 		}
@@ -298,7 +276,7 @@ class MySQLDriver implements IDatabaseDriver {
 	public function delete($table, $where) {
 		if(!$this->isConn) { return false; } else {
 			$query = "DELETE FROM {$table} WHERE {$where}";
-			$res = $this->dblink->query($query);
+			$res = $this->query($query);
 			if( $res === false ) {
 				return false;
 			} else {
@@ -332,7 +310,7 @@ class MySQLDriver implements IDatabaseDriver {
 			}
 			$qVal = implode(", ", $val);
 			$query = "UPDATE ".$table." SET ".$qVal." WHERE ".$where.";";
-			$res = $this->dblink->query( $query );
+			$res = $this->query( $query );
 			if( $res === false ) {
 				return false;
 			} else {
@@ -347,7 +325,7 @@ class MySQLDriver implements IDatabaseDriver {
 	 */
 	public function getAffectedRows()
 	{
-		return $this->dblink->affected_rows;
+		return $this->changes();
 	}
 	
 	/**
